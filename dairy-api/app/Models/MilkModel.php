@@ -15,6 +15,11 @@ class MilkModel extends BaseModel
     public function getAll(array $filters) {
         $filter_values = [];
         $sql = "SELECT * FROM $this->table_name WHERE 1 ";
+        if(isset($filters['milk_id']))
+        {
+            $sql .= " AND milk_id LIKE CONCAT('%', :milk_id, '%')";
+            $filter_values[':milk_id'] = $filters['milk_id']; 
+        }
         if(isset($filters['name']))
         {
             $sql .= " AND name LIKE CONCAT('%', :name, '%')";
@@ -34,6 +39,21 @@ class MilkModel extends BaseModel
         {
             $sql .= " AND year_created LIKE CONCAT('%', :year_created, '%')";
             $filter_values[':year_created'] = $filters['year_created']; 
+        }
+        if(isset($filters['country_id']))
+        {
+            $sql .= " AND country_id LIKE CONCAT('%', :country_id, '%')";
+            $filter_values[':country_id'] = $filters['country_id']; 
+        }
+        if(isset($filters['brand_id']))
+        {
+            $sql .= " AND brand_id LIKE CONCAT('%', :brand_id, '%')";
+            $filter_values[':brand_id'] = $filters['brand_id']; 
+        }
+        if(isset($filters['nutrition_value_id']))
+        {
+            $sql .= " AND nutrition_value_id LIKE CONCAT('%', :nutrition_value_id, '%')";
+            $filter_values[':nutrition_value_id'] = $filters['nutrition_value_id']; 
         }
 
         return $this->paginate($sql, $filter_values);

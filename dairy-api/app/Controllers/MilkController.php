@@ -19,7 +19,7 @@ class MilkController extends BaseController
     public function handleGetMilk(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
-        //-- Step 1) Pull the ist of milk from the database
+        //-- Step 1) Pull the list of milk from the database
         $milk = $this->milk_model->getAll($filters);
         //--Step 2) Prepare the HTTP request
         return $this->prepareOkResponse($response,(array) $milk);

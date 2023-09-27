@@ -129,6 +129,26 @@ class BaseModel
         return $this->run($sql, $args)->fetchAll($fetchMode);
     }
 
+    protected function paginate($sql, $args = [], $fetchMode = PDO::FETCH_ASSOC)
+    {
+        //--Step 1) Get the number of rows that will be returned by the query
+        $rows_count = $this->count($sql, $args);
+        //--Step 2) Instantiate the pagination helper
+        $pagination_helper = new PaginationHelper(
+            $this->current_page,
+            $this->records_per_page,
+            $rows_count
+        );
+        //--Step 3) Get the offset
+        $offset = $pagination_helper->getOffset();
+        //--Step 4) Constrain the number of records that should be included in the result set
+        $sql .= " LIMIT $offset, $this->records_per_page";
+        //--Step 5) Get the pagination info from the helper
+        $data = $pagination_helper->getPaginationInfo();
+        $data['data'] = $this->fetchAll($sql, $args);
+        return $data;
+    }
+
     /**
      * Finds a record matching the provided filtering options.
      * Can execute a query that joins two or more tables. 
