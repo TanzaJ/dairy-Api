@@ -22,11 +22,6 @@ class CheeseModel extends BaseModel
             $sql .= " AND product_name LIKE CONCAT('%', :product_name, '%')";
             $filter_values[':product_name'] = $filters['product_name']; 
         }
-        if(isset($filters['dp_id']))
-        {
-            $sql .= " AND dp_id LIKE CONCAT('%', :dp_id, '%')";
-            $filter_values[':dp_id'] = $filters['dp_id']; 
-        }
         if(isset($filters['country_id']))
         {
             $sql .= " AND country_id LIKE CONCAT('%', :country_id, '%')";

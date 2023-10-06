@@ -29,6 +29,15 @@ $app->get('/', [AboutController::class, 'handleAboutApi']);
 // ROUTE: GET /milk
 $app->get('/milk', [MilkController::class, 'handleGetMilk']);
 
+//POST /milk
+$app->post('/milk', [MilkController::class, 'handleCreateMilk']);
+
+//PUT /milk
+$app->put('/milk', [MilkController::class, 'handleUpdateMilk']);
+
+//DELETE /milk
+$app->delete('/milk', [MilkController::class, 'handleDeleteMilk']);
+
 //GET /cheese
 $app->get('/milk/{milk_id}/cheese', [CheeseController::class, 'handleGetCheese']);
 

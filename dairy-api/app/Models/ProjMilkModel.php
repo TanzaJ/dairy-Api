@@ -42,11 +42,6 @@ class ProjMilkModel extends BaseModel
             $sql .= " AND price LIKE CONCAT('%', :price, '%')";
             $filter_values[':price'] = $filters['price']; 
         }
-        if(isset($filters['unit_id']))
-        {
-            $sql .= " AND unit_id LIKE CONCAT('%', :unit_id, '%')";
-            $filter_values[':unit_id'] = $filters['unit_id']; 
-        }
 
         return $this->paginate($sql, $filter_values);
     }
