@@ -5,6 +5,7 @@ use Vanier\Api\Models\BaseModel;
 
 class IceCreamModel extends BaseModel
 {
+    private string $table_name = 'ice_cream';
     public function __construct() {
         parent::__construct();
     }
@@ -39,6 +40,21 @@ class IceCreamModel extends BaseModel
         }
 
         return $this->paginate($sql, $filter_values);
+    }
+
+    public function addIceCream(array $new_entries)
+    {
+        return $this->insert($this->table_name, $new_entries);
+    }
+
+    public function updateModel(array $new_ice_cream_modify, int $id)
+    {
+        return $this->update($this->table_name, $new_ice_cream_modify, (array) $id);
+    }
+
+    public function deleteIceCream(int $id)
+    {
+        return $this->delete($this->table_name, (array) $id);
     }
 
 

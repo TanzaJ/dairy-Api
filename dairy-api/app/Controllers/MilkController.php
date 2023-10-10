@@ -31,7 +31,7 @@ class MilkController extends BaseController
         if(!isset($milks)) 
         {
             throw new HttpMissingDataException($request,
-            "Couldn't create films/process the request due to missing data.");
+            "Couldn't create milks/process the request due to missing data.");
         }
         foreach($milks as $key => $milk) {
             $this->validateMilk($milk);
