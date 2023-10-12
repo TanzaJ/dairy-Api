@@ -4,7 +4,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\AboutController;
-use Vanier\Api\Controllers\FilmsController;
 use Vanier\Api\Controllers\MilkController;
 use Vanier\Api\Models\MilkModel;
 use Vanier\Api\Controllers\IceCreamController;
@@ -13,8 +12,13 @@ use Vanier\Api\Controllers\ButterController;
 use Vanier\Api\Models\ButterModel;
 use Vanier\Api\Controllers\ProjMilkController;
 use Vanier\Api\Models\ProjMilkModel;
-use Vanier\Api\Controllers\UnitTypeController;
-use Vanier\Api\Models\UnitTypeModel;
+use Vanier\Api\Controllers\BrandController;
+use Vanier\Api\Models\BrandModel;
+use Vanier\Api\Controllers\CountryController;
+use Vanier\Api\Models\CountryModel;
+use Vanier\Api\Controllers\NutritionalValueController;
+use Vanier\Api\Models\NutritionalValueModel;
+
 
 // Import the app instance into this file's scope.
 global $app;
@@ -36,7 +40,7 @@ $app->post('/milk', [MilkController::class, 'handleCreateMilk']);
 $app->put('/milk', [MilkController::class, 'handleUpdateMilk']);
 
 //DELETE /milk
-$app->delete('/milk', [MilkController::class, 'handleDeleteMilk']);
+$app->delete('/milk', [MilkController::class, 'deleteMilk']);
 
 //GET /cheese
 $app->get('/milk/{milk_id}/cheese', [CheeseController::class, 'handleGetCheese']);
@@ -44,13 +48,35 @@ $app->get('/milk/{milk_id}/cheese', [CheeseController::class, 'handleGetCheese']
 //GET /ice_cream
 $app->get('/milk/{milk_id}/ice_cream', [IceCreamController::class, 'handleGetIceCream']);
 
+//POST /ice_cream
+$app->post('/milk/{milk_id}/ice_cream', [IceCreamController::class, 'handleCreateIceCream']);
+
+//PUT /ice_cream
+$app->put('/milk/{milk_id}/ice_cream', [IceCreamController::class, 'handleUpdateIceCream']);
+
+//DELETE /ice_cream
+$app->delete('/milk/{milk_id}/ice_cream', [IceCreamController::class, 'deleteIceCream']);
+
 //GET /butter
 $app->get('/milk/{milk_id}/butter', [ButterController::class, 'handleGetButter']);
+
+//POST /butter
+$app->post('/milk/{milk_id}/butter', [ButterController::class, 'handleGetButter']);
+
+//PUT /butter
+$app->put('/milk/{milk_id}/butter', [ButterController::class, 'handleUpdateButter']);
+
+//DELETE /butter
+$app->delete('/milk/{milk_id}/butter', [ButterController::class, 'deleteButter']);
 
 //GET /projectedMilkProduction
 $app->get('/milk/{milk_id}/projectedMilkProduction', [ProjMilkController::class, 'handleGetProjMilk']);
 
-//GET /unit_type
-$app->get('/milk/{milk_id}/{pmp_id}/unit_type', [UnitTypeController::class, 'handleGetUnitType']);
+//GET /brand
+$app->get('/brand', [BrandController::class, 'handleGetBrand']);
 
-//TODO: GET /country, brand and nutritional value
+//GET /country
+$app->get('/country', [CountryController::class, 'handleGetCountry']);
+
+//GET /nutritional_value
+$app->get('/nutritional_value', [NutritionalValueController::class, 'handleGetNV']);

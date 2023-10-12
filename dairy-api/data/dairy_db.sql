@@ -32,6 +32,7 @@ USE dairy_db;
 CREATE TABLE `nutritional_value` (
   `nutritional_value_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `kcal` float NOT NULL,
+  `fiber` float NOT NULL,
   `cholesterol` float NOT NULL,
   `carbohydrate` float NOT NULL,
   `protein` float NOT NULL,
