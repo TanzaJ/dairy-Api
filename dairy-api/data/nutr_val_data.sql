@@ -1,5 +1,5 @@
 -- Insert 20 dummy data entries 
-INSERT INTO nutritional_value (kcal, cholesterol, carbohydrate, protein, mono_fat, polysat_fat, sat_fat)
+/*INSERT INTO nutritional_value (kcal, cholesterol, carbohydrate, protein, monosat_fat, polysat_fat, sat_fat)
 VALUES
     (200, 10, 25, 15, 5, 3, 2),
     (150, 5, 30, 10, 7, 2, 1),
@@ -21,3 +21,19 @@ VALUES
     (140, 5, 22, 14, 6, 2, 1),
     (170, 8, 28, 17, 7, 3, 2),
     (210, 11, 34, 20, 9, 4, 3);
+*/
+
+-- Insert nutritional values for milk
+INSERT INTO `nutritional_value` (`nutritional_value_id`, `kcal`, `fiber`, `cholesterol`, `carbohydrate`, `protein`, `monosat_fat`, `polysat_fat`, `sat_fat`)
+VALUES
+  (1, 61, 0, 20, 5, 3, 1, 0, 2),
+  (2, 47, 0, 10, 5, 2, 1, 0, 1),
+  (3, 34, 0, 5, 5, 1, 0.5, 0, 0.5),
+  (4, 27, 0, 2, 5, 1, 0, 0, 0),
+  (5, 126, 2, 35, 23, 8, 3, 0, 5),
+  (6, 80, 1, 0, 7, 6, 1, 3, 0.5),
+  (7, 160, 1, 0, 10, 8, 1, 0, 5),
+  (8, 130, 1, 0, 15, 3, 0, 0, 1),
+  (9, 69, 0, 20, 4, 5, 0, 0, 3),
+  (10, 50, 1, 10, 3, 3, 2, 0, 1);
+
