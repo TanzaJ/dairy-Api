@@ -12,6 +12,26 @@ VALUES
     (3, 'Truffle Butter', 29, 9, 9, 29),
     (1, 'Goat Butter', 30, 10, 10, 30);
 
+INSERT INTO `butter`(`butter_id`, `milk_id`, `product_name`, `country_id`, `brand_id`, `nutritional_value_id`) 
+VALUES 
+('1', '1', 'Kerrygold Butter', '372', '1', '1234'),
+('2', '2', 'Lactantia Butter', '124', '2', '5678'),
+('3', '3', 'Dairyland Butter', '124', '3', '9012'),
+('4', '4', 'Natrel Butter', '124', '4', '3456'),
+('5', '5', 'Babybel Butter', '250', '5', '7890'),
+('6', '6', 'Black Diamond Butter', '124', '6', '2345'),
+('7', '7', 'Kraft Butter', '840', '7', '6789'),
+('8', '8', 'Cracker Barrel Butter', '840', '8', '1234'),
+('9', '9', 'Saputo Butter', '124', '9', '5678'),
+('10', '10', 'Lactalis Butter', '250', '10', '9012'),
+('11', '11', 'Beatrice Foods Butter', '124', '11', '3456'),
+('12', '12', 'Chapman Butter', '840', '12', '7890'),
+('13', '13', 'La Diperie Butter', '124', '13', '2345'),
+('14', '14', 'Bilboquet Butter', '124', '14', '6789'),
+('15', '15', 'Laura Secord Butter', '124', '15', '1234');
+
+
+
 /*
 
 INSERT INTO `butter_types` (`brand_id`, `butter_type`)

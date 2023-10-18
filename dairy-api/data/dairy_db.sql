@@ -11,16 +11,16 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-DROP SCHEMA IF EXISTS dairy_db;
-CREATE SCHEMA dairy_db;
-USE dairy_db;
+DROP SCHEMA IF EXISTS dairy_db_2;
+CREATE SCHEMA dairy_db_2;
+USE dairy_db_2;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dairy_db`
+-- Database: `dairy_db_2`
 --
 
 -- --------------------------------------------------------

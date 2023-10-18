@@ -41,6 +41,23 @@ VALUES
   ('Camel Milk', 10.99, 'United Arab Emirates', 1980, 784, 2, 10);
 
 
+INSERT INTO `milk`(`milk_id`, `name`, `average_cost`, `place_of_origin`, `year_created`, `country_id`, `brand_id`, `nutritional_value_id`) 
+VALUES 
+('1', 'Kerrygold Milk', '2.99', 'Ireland', '1990', '372', '1', '1234'),
+('2', 'Lactantia Milk', '3.49', 'Canada', '1980', '124', '2', '5678'),
+('3', 'Dairyland Milk', '3.19', 'Canada', '1975', '124', '3', '9012'),
+('4', 'Natrel Milk', '3.29', 'Canada', '1985', '124', '4', '3456'),
+('5', 'Babybel Milk', '2.79', 'France', '2000', '250', '5', '7890'),
+('6', 'Black Diamond Milk', '3.09', 'Canada', '1995', '124', '6', '2345'),
+('7', 'Kraft Milk', '2.89', 'USA', '1992', '840', '7', '6789'),
+('8', 'Cracker Barrel Milk', '3.19', 'USA', '1987', '840', '8', '1234'),
+('9', 'Saputo Milk', '3.09', 'Canada', '1982', '124', '9', '5678'),
+('10', 'Lactalis Milk', '2.99', 'France', '1978', '250', '10', '9012'),
+('11', 'Beatrice Foods Milk', '3.39', 'Canada', '1988', '124', '11', '3456'),
+('12', 'Chapman Milk', '3.49', 'USA', '1991', '840', '12', '7890'),
+('13', 'La Diperie Milk', '3.09', 'Canada', '2005', '124', '13', '2345'),
+('14', 'Bilboquet Milk', '3.29', 'Canada', '1999', '124', '14', '6789'),
+('15', 'Laura Secord Milk', '3.19', 'Canada', '1984', '124', '15', '1234');
 
 
 
