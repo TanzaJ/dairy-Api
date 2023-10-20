@@ -16,3 +16,6 @@ https://www.kaggle.com/datasets/mathurinache/cheese-pics
 
 https://github.com/IllusionMan1212/say-cheese
 https://www.cheese.com/
+
+country table:
+https://ourworldindata.org/grapher/population-density-vs-prosperity?tab=table
