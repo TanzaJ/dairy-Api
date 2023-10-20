@@ -20,12 +20,8 @@ class IceCreamController extends BaseController
 
     public function handleGetIceCream(Request $request, Response $response, array $uri_args)
     {
-        $milk_id = $uri_args['milk_id'];
-        if (!Input::isInt($milk_id)) {
-            throw new HttpNotFoundException($request, "Invalid milk id was provided!");
-        }
         $filters = $request->getQueryParams();
-        $ice_cream_info = $this->ice_cream_model->getAll($uri_args['milk_id'], $filters);
+        $ice_cream_info = $this->ice_cream_model->getAll($filters);
         return $this->prepareOkResponse($response,(array) $ice_cream_info);
     }
 

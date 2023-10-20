@@ -13,11 +13,6 @@ class NutritionalValueModel extends BaseModel
     public function getAll(array $filters) {
         $filter_values = [];
         $sql = "SELECT * FROM nutritional_value WHERE 1 ";
-        if(isset($filters['nutr_val_id']))
-        {
-            $sql .= " AND nutr_val_id LIKE CONCAT('%', :nutr_val_id, '%')";
-            $filter_values[':nutr_val_id'] = $filters['nutr_val_id']; 
-        }
         if(isset($filters['kcal']))
         {
             $sql .= " AND kcal LIKE CONCAT('%', :kcal, '%')";

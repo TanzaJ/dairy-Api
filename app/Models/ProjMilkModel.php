@@ -9,14 +9,9 @@ class ProjMilkModel extends BaseModel
         parent::__construct();
     }
 
-    public function getAll(int $milk_id, array $filters) {
+    public function getAll( array $filters) {
         $filter_values = [];
-        $sql = "SELECT * FROM milk JOIN projectedMilkProduction ON milk.milk_id=projectedMilkProduction.milk_id WHERE milk_id = :milk_id AND 1 ";
-        if(isset($filters['pmp_id']))
-        {
-            $sql .= " AND pmp_id LIKE CONCAT('%', :pmp_id, '%')";
-            $filter_values[':pmp_id'] = $filters['pmp_id']; 
-        }
+        $sql = "SELECT * FROM milk JOIN projectedMilkProduction ON milk.milk_id=projectedMilkProduction.milk_id WHERE 1 ";
         if(isset($filters['year']))
         {
             $sql .= " AND year LIKE CONCAT('%', :year, '%')";

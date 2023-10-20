@@ -18,12 +18,8 @@ class ProjMilkController extends BaseController
 
     public function handleGetProjMilk(Request $request, Response $response, array $uri_args)
     {
-        $milk_id = $uri_args['milk_id'];
-        if (!Input::isInt($milk_id)) {
-            throw new HttpNotFoundException($request, "Invalid milk id was provided!");
-        }
         $filters = $request->getQueryParams();
-        $proj_milk_info = $this->proj_milk_model->getAll($uri_args['milk_id'], $filters);
+        $proj_milk_info = $this->proj_milk_model->getAll($filters);
         return $this->prepareOkResponse($response,(array) $proj_milk_info);
     }
 

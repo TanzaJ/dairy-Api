@@ -18,16 +18,8 @@ class UnitTypeController extends BaseController
 
     public function handleGetUnitType(Request $request, Response $response, array $uri_args)
     {
-        $milk_id = $uri_args['milk_id'];
-        if (!Input::isInt($milk_id)) {
-            throw new HttpNotFoundException($request, "Invalid milk id was provided!");
-        }
-        $pmp_id = $uri_args['pmp_id'];
-        if (!Input::isInt($pmp_id)) {
-            throw new HttpNotFoundException($request, "Invalid pmp id was provided!");
-        }
         $filters = $request->getQueryParams();
-        $unit_type_info = $this->unit_type_model->getAll($uri_args['milk_id'], $uri_args['pmp_id'], $filters);
+        $unit_type_info = $this->unit_type_model->getAll($filters);
         return $this->prepareOkResponse($response,(array) $unit_type_info);
     }
 

@@ -20,12 +20,8 @@ class ButterController extends BaseController
 
     public function handleGetButter(Request $request, Response $response, array $uri_args)
     {
-        $milk_id = $uri_args['milk_id'];
-        if (!Input::isInt($milk_id)) {
-            throw new HttpNotFoundException($request, "Invalid milk id was provided!");
-        }
         $filters = $request->getQueryParams();
-        $butter_info = $this->butter_model->getAll($uri_args['milk_id'], $filters);
+        $butter_info = $this->butter_model->getAll($filters);
         return $this->prepareOkResponse($response,(array) $butter_info);
     }
 

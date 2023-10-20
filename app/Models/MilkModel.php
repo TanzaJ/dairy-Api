@@ -14,12 +14,10 @@ class MilkModel extends BaseModel
 
     public function getAll(array $filters) {
         $filter_values = [];
-        $sql = "SELECT * FROM $this->table_name WHERE 1 ";
-        if(isset($filters['milk_id']))
-        {
-            $sql .= " AND milk_id LIKE CONCAT('%', :milk_id, '%')";
-            $filter_values[':milk_id'] = $filters['milk_id']; 
-        }
+        $sql = "SELECT * FROM $this->table_name 
+        JOIN country ON country.country_id=milk.country_id 
+        JOIN brand ON brand.brand_id=milk.brand_id 
+        JOIN nutritional_value ON nutritional_value.nutritional_value_id=milk.nutritional_value_id WHERE 1 ";
         if(isset($filters['name']))
         {
             $sql .= " AND name LIKE CONCAT('%', :name, '%')";
@@ -40,21 +38,16 @@ class MilkModel extends BaseModel
             $sql .= " AND year_created LIKE CONCAT('%', :year_created, '%')";
             $filter_values[':year_created'] = $filters['year_created']; 
         }
-        if(isset($filters['country_id']))
-        {
-            $sql .= " AND country_id LIKE CONCAT('%', :country_id, '%')";
-            $filter_values[':country_id'] = $filters['country_id']; 
-        }
-        if(isset($filters['brand_id']))
-        {
-            $sql .= " AND brand_id LIKE CONCAT('%', :brand_id, '%')";
-            $filter_values[':brand_id'] = $filters['brand_id']; 
-        }
-        if(isset($filters['nutrition_value_id']))
-        {
-            $sql .= " AND nutrition_value_id LIKE CONCAT('%', :nutrition_value_id, '%')";
-            $filter_values[':nutrition_value_id'] = $filters['nutrition_value_id']; 
-        }
+        if(isset($filters['country_name']))
+       {
+           $sql .= " AND country_name LIKE CONCAT('%', :country_name, '%')";
+           $filter_values[':country_name'] = $filters['country_name']; 
+       }
+       if(isset($filters['brand_name']))
+       {
+           $sql .= " AND brand_name LIKE CONCAT('%', :brand_name, '%')";
+           $filter_values[':brand_name'] = $filters['brand_name']; 
+       }
 
         return $this->paginate($sql, $filter_values);
     }

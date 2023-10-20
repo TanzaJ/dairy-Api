@@ -13,11 +13,6 @@ class CountryModel extends BaseModel
     public function getAll(array $filters) {
         $filter_values = [];
         $sql = "SELECT * FROM country WHERE 1 ";
-        if(isset($filters['country_id']))
-        {
-            $sql .= " AND country_id LIKE CONCAT('%', :country_id, '%')";
-            $filter_values[':country_id'] = $filters['country_id']; 
-        }
         if(isset($filters['country_name']))
         {
             $sql .= " AND country_name LIKE CONCAT('%', :country_name, '%')";
@@ -33,15 +28,15 @@ class CountryModel extends BaseModel
             $sql .= " AND population LIKE CONCAT('%', :population, '%')";
             $filter_values[':population'] = $filters['population']; 
         }
-        if(isset($filters['area_sq_mi']))
+        if(isset($filters['area_sq_mile']))
         {
-            $sql .= " AND area_sq_mi LIKE CONCAT('%', :area_sq_mi, '%')";
-            $filter_values[':area_sq_mi'] = $filters['area_sq_mi']; 
+            $sql .= " AND area_sq_mile LIKE CONCAT('%', :area_sq_mile, '%')";
+            $filter_values[':area_sq_mile'] = $filters['area_sq_mile']; 
         }
-        if(isset($filters['population_density_sq_mi']))
+        if(isset($filters['population_density_sq_mile']))
         {
-            $sql .= " AND population_density_sq_mi LIKE CONCAT('%', :population_density_sq_mi, '%')";
-            $filter_values[':population_density_sq_mi'] = $filters['population_density_sq_mi']; 
+            $sql .= " AND population_density_sq_mile LIKE CONCAT('%', :population_density_sq_mile, '%')";
+            $filter_values[':population_density_sq_mile'] = $filters['population_density_sq_mile']; 
         }
         if(isset($filters['gdpPerCapita']))
         {

@@ -4,7 +4,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\AboutController;
+use Vanier\Api\Controllers\CheeseController;
 use Vanier\Api\Controllers\MilkController;
+use Vanier\Api\Controllers\UnitTypeController;
 use Vanier\Api\Models\MilkModel;
 use Vanier\Api\Controllers\IceCreamController;
 use Vanier\Api\Models\IceCreamModel;
@@ -70,7 +72,7 @@ $app->put('/milk/{milk_id}/butter', [ButterController::class, 'handleUpdateButte
 $app->delete('/milk/{milk_id}/butter', [ButterController::class, 'deleteButter']);
 
 //GET /projectedMilkProduction
-$app->get('/milk/{milk_id}/projectedMilkProduction', [ProjMilkController::class, 'handleGetProjMilk']);
+$app->get('/milk/{milk_id}/projected_milk_production', [ProjMilkController::class, 'handleGetProjMilk']);
 
 //GET /brand
 $app->get('/brand', [BrandController::class, 'handleGetBrand']);
@@ -80,3 +82,6 @@ $app->get('/country', [CountryController::class, 'handleGetCountry']);
 
 //GET /nutritional_value
 $app->get('/nutritional_value', [NutritionalValueController::class, 'handleGetNV']);
+
+//GET /unit_type
+$app->get('/unit_type', [UnitTypeController::class, 'handleGetUnitType']);
