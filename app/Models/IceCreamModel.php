@@ -12,10 +12,13 @@ class IceCreamModel extends BaseModel
 
     public function getAll( array $filters) {
         $filter_values = [];
-        $sql = "SELECT * FROM milk JOIN ice_cream ON milk.milk_id=ice_cream.milk_id 
+        $sql = "SELECT 
+        ice_cream.product_name as ice_cream, milk.name AS milk_type, country.country_name, brand.brand_name, 
+        nv.kcal, nv.fiber, nv.cholesterol, nv.carbohydrate, nv.protein, nv.monosat_fat, nv.polysat_fat, nv.sat_fat        
+        FROM milk JOIN ice_cream ON milk.milk_id=ice_cream.milk_id 
         JOIN country ON country.country_id=ice_cream.country_id 
         JOIN brand ON brand.brand_id=ice_cream.brand_id 
-        JOIN  nutritional_value ON nutritional_value.nutritional_value_id=ice_cream.nutritional_value_id WHERE 1 ";
+        JOIN  nutritional_value as nv ON nv.nutritional_value_id=ice_cream.nutritional_value_id WHERE 1 ";
         if(isset($filters['product_name']))
         {
             $sql .= " AND product_name LIKE CONCAT('%', :product_name, '%')";

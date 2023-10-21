@@ -14,10 +14,13 @@ class MilkModel extends BaseModel
 
     public function getAll(array $filters) {
         $filter_values = [];
-        $sql = "SELECT * FROM $this->table_name 
-        JOIN country ON country.country_id=milk.country_id 
-        JOIN brand ON brand.brand_id=milk.brand_id 
-        JOIN nutritional_value ON nutritional_value.nutritional_value_id=milk.nutritional_value_id WHERE 1 ";
+        $sql = "SELECT 
+        m.name as milk, m.average_cost, m.place_of_origin, m.year_created, brand.brand_name,
+        nv.kcal, nv.fiber, nv.cholesterol, nv.carbohydrate, nv.protein, nv.monosat_fat, nv.polysat_fat, nv.sat_fat
+        FROM $this->table_name as m
+        JOIN country ON country.country_id=m.country_id 
+        JOIN brand ON brand.brand_id=m.brand_id 
+        JOIN nutritional_value as nv ON nv.nutritional_value_id=m.nutritional_value_id WHERE 1 ";
         if(isset($filters['name']))
         {
             $sql .= " AND name LIKE CONCAT('%', :name, '%')";

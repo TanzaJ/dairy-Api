@@ -1,5 +1,4 @@
 <?php
-
 namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -7,6 +6,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\Validator;
+
+
 class BaseController
 {
     protected function prepareOkResponse(Response $response, array $data, int $status_code = 200)

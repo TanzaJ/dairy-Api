@@ -9,6 +9,8 @@ use Vanier\Api\Exceptions\HttpMissingDataException;
 use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\Validator;
 use Vanier\Api\Models\ButterModel;
+use Slim\Exception\HttpBadRequestException;
+
 
 class ButterController extends BaseController
 {
@@ -20,6 +22,19 @@ class ButterController extends BaseController
 
     public function handleGetButter(Request $request, Response $response, array $uri_args)
     {
+        $filters = $request->getQueryParams();
+        $validation_response = $this->isValidPagingParams($filters);
+        if ($validation_response === true){
+            $this->butter_model->setPaginationOptions(
+                $filters['page'],
+                $filters['page_size']
+            );
+        }
+        else{
+            throw new HttpBadRequestException($request, $validation_response);
+        }
+
+
         $filters = $request->getQueryParams();
         $butter_info = $this->butter_model->getAll($filters);
         return $this->prepareOkResponse($response,(array) $butter_info);

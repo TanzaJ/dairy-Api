@@ -12,10 +12,13 @@ class ButterModel extends BaseModel
 
     public function getAll( array $filters) {
         $filter_values = [];
-        $sql = "SELECT * FROM milk JOIN butter ON milk.milk_id=butter.milk_id 
-        JOIN country ON country.country_id=butter.country_id 
-        JOIN brand ON brand.brand_id=butter.brand_id 
-        JOIN  nutritional_value ON nutritional_value.nutritional_value_id=butter.nutritional_value_id WHERE 1 ";
+        $sql = "SELECT 
+        butter.product_name as butter, m.name AS milk_type, co.country_name, b.brand_name, 
+        nv.kcal, nv.fiber, nv.cholesterol, nv.carbohydrate, nv.protein, nv.monosat_fat, nv.polysat_fat, nv.sat_fat        
+        FROM milk as m JOIN butter ON m.milk_id=butter.milk_id 
+        JOIN country as co ON co.country_id=butter.country_id 
+        JOIN brand as b ON b.brand_id=butter.brand_id 
+        JOIN  nutritional_value as nv ON nv.nutritional_value_id=butter.nutritional_value_id WHERE 1 ";
         if(isset($filters['product_name']))
         {
             $sql .= " AND product_name LIKE CONCAT('%', :product_name, '%')";

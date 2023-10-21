@@ -9,6 +9,8 @@ use Vanier\Api\Exceptions\HttpMissingDataException;
 use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\Validator;
 use Vanier\Api\Models\MilkModel;
+use Slim\Exception\HttpBadRequestException;
+
 
 class MilkController extends BaseController
 {
@@ -20,6 +22,18 @@ class MilkController extends BaseController
 
     public function handleGetMilk(Request $request, Response $response, array $uri_args)
     {
+        $filters = $request->getQueryParams();
+        $validation_response = $this->isValidPagingParams($filters);
+        if ($validation_response === true){
+            $this->milk_model->setPaginationOptions(
+                $filters['page'],
+                $filters['page_size']
+            );
+        }
+        else{
+            throw new HttpBadRequestException($request, $validation_response);
+        }
+
         $filters = $request->getQueryParams();
         $milk = $this->milk_model->getAll($filters);
         return $this->prepareOkResponse($response,(array) $milk);

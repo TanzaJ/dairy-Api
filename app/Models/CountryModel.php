@@ -12,7 +12,7 @@ class CountryModel extends BaseModel
 
     public function getAll(array $filters) {
         $filter_values = [];
-        $sql = "SELECT * FROM country WHERE 1 ";
+        $sql = "SELECT c.country_name, c.region, c.population, c.area_sq_mile, c.population_density_sq_mile, c.gdp_perCapita FROM country as c WHERE 1 ";
         if(isset($filters['country_name']))
         {
             $sql .= " AND country_name LIKE CONCAT('%', :country_name, '%')";

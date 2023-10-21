@@ -894,20 +894,20 @@ INSERT INTO `projected_milk_production` (`pmp_id`, `year`, `type`, `production`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `unity_type`
+-- Table structure for table `unit_type`
 --
 
-CREATE TABLE `unity_type` (
+CREATE TABLE `unit_type` (
   `unit_id` int(11) NOT NULL,
   `unit_name` varchar(50) NOT NULL,
   `unit_scale` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `unity_type`
+-- Dumping data for table `unit_type`
 --
 
-INSERT INTO `unity_type` (`unit_id`, `unit_name`, `unit_scale`) VALUES
+INSERT INTO `unit_type` (`unit_id`, `unit_name`, `unit_scale`) VALUES
 (1, 'Kiloliters', 1000);
 
 --
@@ -980,9 +980,9 @@ ALTER TABLE `projected_milk_production`
   ADD KEY `milk_id` (`milk_id`);
 
 --
--- Indexes for table `unity_type`
+-- Indexes for table `unit_type`
 --
-ALTER TABLE `unity_type`
+ALTER TABLE `unit_type`
   ADD PRIMARY KEY (`unit_id`);
 
 --
@@ -1026,9 +1026,9 @@ ALTER TABLE `projected_milk_production`
   MODIFY `pmp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=349;
 
 --
--- AUTO_INCREMENT for table `unity_type`
+-- AUTO_INCREMENT for table `unit_type`
 --
-ALTER TABLE `unity_type`
+ALTER TABLE `unit_type`
   MODIFY `unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -1081,7 +1081,7 @@ ALTER TABLE `milk`
 --
 ALTER TABLE `projected_milk_production`
   ADD CONSTRAINT `projected_milk_production_ibfk_1` FOREIGN KEY (`milk_id`) REFERENCES `milk` (`milk_id`),
-  ADD CONSTRAINT `projected_milk_production_ibfk_2` FOREIGN KEY (`unit_id`) REFERENCES `unity_type` (`unit_id`);
+  ADD CONSTRAINT `projected_milk_production_ibfk_2` FOREIGN KEY (`unit_id`) REFERENCES `unit_type` (`unit_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

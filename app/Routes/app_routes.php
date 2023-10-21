@@ -45,22 +45,22 @@ $app->put('/milk', [MilkController::class, 'handleUpdateMilk']);
 $app->delete('/milk', [MilkController::class, 'deleteMilk']);
 
 //GET /cheese
-$app->get('/milk/{milk_id}/cheese', [CheeseController::class, 'handleGetCheese']);
+$app->get('/cheese', [CheeseController::class, 'handleGetCheese']);
 
 //GET /ice_cream
-$app->get('/milk/{milk_id}/ice_cream', [IceCreamController::class, 'handleGetIceCream']);
+$app->get('/ice_cream', [IceCreamController::class, 'handleGetIceCream']);
 
 //POST /ice_cream
-$app->post('/milk/{milk_id}/ice_cream', [IceCreamController::class, 'handleCreateIceCream']);
+$app->post('/ice_cream', [IceCreamController::class, 'handleCreateIceCream']);
 
 //PUT /ice_cream
-$app->put('/milk/{milk_id}/ice_cream', [IceCreamController::class, 'handleUpdateIceCream']);
+$app->put('/ice_cream', [IceCreamController::class, 'handleUpdateIceCream']);
 
 //DELETE /ice_cream
-$app->delete('/milk/{milk_id}/ice_cream', [IceCreamController::class, 'deleteIceCream']);
+$app->delete('/ice_cream', [IceCreamController::class, 'deleteIceCream']);
 
 //GET /butter
-$app->get('/milk/{milk_id}/butter', [ButterController::class, 'handleGetButter']);
+$app->get('/butter', [ButterController::class, 'handleGetButter']);
 
 //POST /butter
 $app->post('/milk/{milk_id}/butter', [ButterController::class, 'handleGetButter']);
