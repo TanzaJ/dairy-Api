@@ -45,14 +45,14 @@ class MilkModel extends BaseModel
             $filter_values[':year_created'] = '%' . $filters['year_created'] . '%';
         }
 
-        if (isset($filters['country_name'])) {
-            $sql .= " AND country.country_name LIKE :country_name";
-            $filter_values[':country_name'] = '%' . $filters['country_name'] . '%';
+        if (isset($filters['country_id'])) {
+            $sql .= " AND country.country_id LIKE :country_id";
+            $filter_values[':country_id'] = '%' . $filters['country_id'] . '%';
         }
 
-        if (isset($filters['brand_name'])) {
-            $sql .= " AND brand.brand_name LIKE :brand_name";
-            $filter_values[':brand_name'] = '%' . $filters['brand_name'] . '%';
+        if (isset($filters['brand_id'])) {
+            $sql .= " AND brand.brand_id LIKE :brand_id";
+            $filter_values[':brand_id'] = '%' . $filters['brand_id'] . '%';
         }
 
         return $this->paginate($sql, $filter_values);

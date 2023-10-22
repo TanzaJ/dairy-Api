@@ -85,3 +85,6 @@ $app->get('/nutritional_value', [NutritionalValueController::class, 'handleGetNV
 
 //GET /unit_type
 $app->get('/unit_type', [UnitTypeController::class, 'handleGetUnitType']);
+
+//GET /projected_milk_production
+$app->get('/projected_milk_production', [ProjMilkController::class, 'handleGetProjMilk']);

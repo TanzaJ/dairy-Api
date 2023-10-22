@@ -11,7 +11,7 @@ class ProjMilkModel extends BaseModel
 
     public function getAll( array $filters) {
         $filter_values = [];
-        $sql = "SELECT * FROM milk JOIN projectedMilkProduction ON milk.milk_id=projectedMilkProduction.milk_id WHERE 1 ";
+        $sql = "SELECT * FROM projected_milk_production JOIN milk ON milk.milk_id=projected_milk_production.milk_id WHERE 1 ";
         if(isset($filters['year']))
         {
             $sql .= " AND year LIKE CONCAT('%', :year, '%')";

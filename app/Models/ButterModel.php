@@ -26,14 +26,14 @@ class ButterModel extends BaseModel
             $query_values[':product_name'] = $filters['product_name'];
         }
 
-        if (isset($filters['country_name'])) {
-            $sql .= " AND country.country_name LIKE CONCAT('%', :country_name, '%')";
-            $query_values[':country_name'] = $filters['country_name'];
+        if (isset($filters['country_id'])) {
+            $sql .= " AND country.country_id LIKE CONCAT('%', :country_id, '%')";
+            $query_values[':country_id'] = $filters['country_id'];
         }
 
-        if (isset($filters['brand_name'])) {
-            $sql .= " AND brand.brand_name LIKE CONCAT('%', :brand_name, '%')";
-            $query_values[':brand_name'] = $filters['brand_name'];
+        if (isset($filters['brand_id'])) {
+            $sql .= " AND brand.brand_id LIKE CONCAT('%', :brand_id, '%')";
+            $query_values[':brand_id'] = $filters['brand_id'];
         }
 
         return $this->paginate($sql, $query_values);

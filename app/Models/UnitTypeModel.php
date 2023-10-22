@@ -11,8 +11,8 @@ class UnitTypeModel extends BaseModel
 
     public function getAll( array $filters) {
         $filter_values = []; 
-        $sql = "SELECT * FROM unit_type JOIN projectedMilkProduction ON projectedMilkProduction.unit_id=unit_type.unit_id
-        JOIN milk ON milk.milk_id=projectedMilkProduction.milk_id WHERE 1 ";
+        $sql = "SELECT * FROM unit_type JOIN projected_milk_production ON projected_milk_production.unit_id=unit_type.unit_id
+        JOIN milk ON milk.milk_id=projected_milk_production.milk_id WHERE 1 ";
         if(isset($filters['unit_name']))
         {
             $sql .= " AND unit_name LIKE CONCAT('%', :unit_name, '%')";

@@ -38,10 +38,10 @@ class CountryModel extends BaseModel
             $sql .= " AND population_density_sq_mile LIKE CONCAT('%', :population_density_sq_mile, '%')";
             $filter_values[':population_density_sq_mile'] = $filters['population_density_sq_mile']; 
         }
-        if(isset($filters['gdpPerCapita']))
+        if(isset($filters['gdp_PerCapita']))
         {
-            $sql .= " AND gdpPerCapita LIKE CONCAT('%', :gdpPerCapita, '%')";
-            $filter_values[':gdpPerCapita'] = $filters['gdpPerCapita']; 
+            $sql .= " AND gdp_PerCapita LIKE CONCAT('%', :gdp_PerCapita, '%')";
+            $filter_values[':gdp_PerCapita'] = $filters['gdp_PerCapita']; 
         }
         
         return $this->paginate($sql, $filter_values);
