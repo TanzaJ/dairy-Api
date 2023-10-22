@@ -18,7 +18,7 @@ class MilkModel extends BaseModel
     {
         $filter_values = [];
         $sql = "
-        SELECT milk.*
+        SELECT milk.*, country.country_name, brand.brand_name
         FROM $this->table_name AS milk
         JOIN country ON milk.country_id = country.country_id
         JOIN brand ON milk.brand_id = brand.brand_id
@@ -45,14 +45,14 @@ class MilkModel extends BaseModel
             $filter_values[':year_created'] = '%' . $filters['year_created'] . '%';
         }
 
-        if (isset($filters['country_id'])) {
-            $sql .= " AND country.country_id LIKE :country_id";
-            $filter_values[':country_id'] = '%' . $filters['country_id'] . '%';
+        if (isset($filters['country_name'])) {
+            $sql .= " AND country.country_name LIKE CONCAT('%', :country_name, '%')";
+            $query_values[':country_name'] = $filters['country_name'];
         }
 
-        if (isset($filters['brand_id'])) {
-            $sql .= " AND brand.brand_id LIKE :brand_id";
-            $filter_values[':brand_id'] = '%' . $filters['brand_id'] . '%';
+        if (isset($filters['brand_name'])) {
+            $sql .= " AND brand.brand_name LIKE CONCAT('%', :brand_name, '%')";
+            $query_values[':brand_name'] = $filters['brand_name'];
         }
 
         return $this->paginate($sql, $filter_values);
