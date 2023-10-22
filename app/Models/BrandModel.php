@@ -10,21 +10,28 @@ class BrandModel extends BaseModel
         parent::__construct();
     }
 
-    public function getAll(array $filters) {
-        $filter_values = [];
-        $sql = "SELECT * FROM brand WHERE 1 ";
-        if(isset($filters['brand_name']))
-        {
-            $sql .= " AND brand_name LIKE CONCAT('%', :brand_name, '%')";
-            $filter_values[':brand_name'] = $filters['brand_name']; 
-        }
-        if(isset($filters['country_name']))
-        {
-            $sql .= " AND country_name LIKE CONCAT('%', :country_name, '%')";
-            $filter_values[':country_name'] = $filters['country_name']; 
-        }
-        
-        return $this->paginate($sql, $filter_values);
-    }
+    private string $table_name = 'brand';
 
+    function getAll(array $filters)
+    {
+        $sql = "
+        SELECT brand.*, country.country_name 
+        FROM $this->table_name AS brand
+        JOIN country ON brand.country_id = country.country_id
+        WHERE 1
+    ";
+        $query_values = [];
+
+        if (isset($filters['brand_name'])) {
+            $sql .= " AND brand.brand_name = :brand_name";
+            $query_values[':brand_name'] = $filters['brand_name'];
+        }
+
+        if (isset($filters['country_name'])) {
+            $sql .= " AND country.country_name = :country_name";
+            $query_values[':country_name'] = $filters['country_name'];
+        }
+
+        return $this->paginate($sql, $query_values);
+    }
 }

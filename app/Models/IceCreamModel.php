@@ -6,36 +6,36 @@ use Vanier\Api\Models\BaseModel;
 class IceCreamModel extends BaseModel
 {
     private string $table_name = 'ice_cream';
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function getAll( array $filters) {
-        $filter_values = [];
-        $sql = "SELECT 
-        ice_cream.product_name as ice_cream, milk.name AS milk_type, country.country_name, brand.brand_name, 
-        nv.kcal, nv.fiber, nv.cholesterol, nv.carbohydrate, nv.protein, nv.monosat_fat, nv.polysat_fat, nv.sat_fat        
-        FROM milk JOIN ice_cream ON milk.milk_id=ice_cream.milk_id 
-        JOIN country ON country.country_id=ice_cream.country_id 
-        JOIN brand ON brand.brand_id=ice_cream.brand_id 
-        JOIN  nutritional_value as nv ON nv.nutritional_value_id=ice_cream.nutritional_value_id WHERE 1 ";
-        if(isset($filters['product_name']))
-        {
-            $sql .= " AND product_name LIKE CONCAT('%', :product_name, '%')";
-            $filter_values[':product_name'] = $filters['product_name']; 
-        }
-        if(isset($filters['country_name']))
-        {
-            $sql .= " AND country_name LIKE CONCAT('%', :country_name, '%')";
-            $filter_values[':country_name'] = $filters['country_name']; 
-        }
-        if(isset($filters['brand_name']))
-        {
-            $sql .= " AND brand_name LIKE CONCAT('%', :brand_name, '%')";
-            $filter_values[':brand_name'] = $filters['brand_name']; 
+    public function getAll(array $filters)
+    {
+        $query_values = [];
+        $sql = "SELECT ice_cream.*
+            FROM $this->table_name AS ice_cream
+            JOIN country ON ice_cream.country_id = country.country_id
+            JOIN brand ON ice_cream.brand_id = brand.brand_id
+            WHERE 1";
+
+        if (isset($filters['product_name'])) {
+            $sql .= " AND ice_cream.product_name = :product_name";
+            $query_values[':product_name'] = $filters['product_name'];
         }
 
-        return $this->paginate($sql, $filter_values);
+        if (isset($filters['country_name'])) {
+            $sql .= " AND country.country_name LIKE CONCAT('%', :country_name, '%')";
+            $query_values[':country_name'] = $filters['country_name'];
+        }
+
+        if (isset($filters['brand_name'])) {
+            $sql .= " AND brand.brand_name LIKE CONCAT('%', :brand_name, '%')";
+            $query_values[':brand_name'] = $filters['brand_name'];
+        }
+
+        return $this->paginate($sql, $query_values);
     }
 
     public function addIceCream(array $new_entries)

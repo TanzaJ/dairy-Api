@@ -5,19 +5,20 @@ use Vanier\Api\Models\BaseModel;
 
 class CheeseModel extends BaseModel
 {
+    private string $table_name = 'cheese';
     public function __construct() {
         parent::__construct();
     }
 
     public function getAll( array $filters) {
         $filter_values = [];
-        $sql = "SELECT 
-        ch.product_name as cheese, m.name AS milk_type, co.country_name, b.brand_name, 
-        nv.kcal, nv.fiber, nv.cholesterol, nv.carbohydrate, nv.protein, nv.monosat_fat, nv.polysat_fat, nv.sat_fat
-        FROM milk AS m JOIN cheese AS ch ON m.milk_id=ch.milk_id 
-        JOIN country as co ON co.country_id=ch.country_id 
-        JOIN brand as b ON b.brand_id=ch.brand_id 
-        JOIN  nutritional_value as nv ON nv.nutritional_value_id=ch.nutritional_value_id WHERE 1 ";
+       
+       $sql = "SELECT cheese.*
+        FROM $this->table_name AS cheese
+        JOIN country ON cheese.country_id = country.country_id
+        JOIN brand ON cheese.brand_id = brand.brand_id
+        WHERE 1";
+
        if(isset($filters['product_name']))
        {
            $sql .= " AND product_name LIKE CONCAT('%', :product_name, '%')";
