@@ -6,6 +6,7 @@ use Vanier\Api\Models\BaseModel;
 
 class CountryModel extends BaseModel
 {
+    private string $table_name = 'country';
     public function __construct() {
         parent::__construct();
     }
@@ -46,5 +47,18 @@ class CountryModel extends BaseModel
         
         return $this->paginate($sql, $filter_values);
     }
+    public function addCountry(array $new_entries)
+    {
+        return $this->insert($this->table_name, $new_entries);
+    }
 
+    public function updateCountry(array $new_country_modify, int $id)
+    {
+        return $this->update($this->table_name, $new_country_modify, (array) $id);
+    }
+
+    public function deleteCountry(int $id)
+    {
+        return $this->delete($this->table_name, (array) $id);
+    }
 }

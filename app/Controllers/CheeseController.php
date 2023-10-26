@@ -76,7 +76,7 @@ class CheeseController extends BaseController
             $id = $cheese['cheese_id'];
             unset($cheese['cheese_id']);
 
-            //$this->validateCheese($cheese);
+            $this->validateCheese($cheese);
             $this->cheese_model->updateModel($cheese, $id);
         }
         $response_data = array(
@@ -116,39 +116,37 @@ class CheeseController extends BaseController
         HttpCodes::STATUS_ACCEPTED
     );
     }
-
-    // public function validateCheese(array $cheese) 
-    // {
-    //     $rules = array(
-    //         'cheese_id' => array(
-    //             'required', 'int'
-    //         ),
-    //         'milk_id' => array(
-    //             'required', 'int'
-    //         ),
-    //         'product_name' => array(
-    //             'required'
-    //         ),
-    //         'country_id' => array(
-    //             'required', 'int'
-    //         ),
-    //         'brand_id' => array(
-    //             'required', 'int'
-    //         ),
-    //         'nutritional_value_id' => array(
-    //             'required', 'int'
-    //         )
-    //     );
-
-    //     $v = new Validator($cheese);
-    //     $v->mapFieldsRules($rules);
-    //     if($v->validate()) {
-    //         echo "Data validated";
-    //     }else {
-    //         // Errors
-    //         echo $v->errorsToString();
-    //         echo $v->errorsToJson();
-    //     }
-    // }
+    public function validateCheese(array $cheese)
+    {
+        $rules = array(
+            'cheese_id' => array(
+                'required', 'int'
+            ),
+            'milk_id' => array(
+                'required', 'int'
+            ),
+            'product_name' => array(
+                'required'
+            ),
+            'country_id' => array(
+                'required', 'int'
+            ),
+            'brand_id' => array(
+                'required', 'int'
+            ),
+            'nutritional_value_id' => array(
+                'required', 'int'
+            )
+        );
+        $v = new Validator($cheese);
+        $v->mapFieldsRules($rules);
+        if ($v->validate()) {
+            echo "Data validated";
+        } else {
+            // Errors
+            echo $v->errorsToString();
+            echo $v->errorsToJson();
+        }
+    }
 
 }

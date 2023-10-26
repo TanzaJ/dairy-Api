@@ -34,4 +34,18 @@ class BrandModel extends BaseModel
 
         return $this->paginate($sql, $query_values);
     }
+    public function addBrand(array $new_entries)
+    {
+        return $this->insert($this->table_name, $new_entries);
+    }
+
+    public function updateBrand(array $new_brand_modify, int $id)
+    {
+        return $this->update($this->table_name, $new_brand_modify, (array) $id);
+    }
+
+    public function deleteBrand(int $id)
+    {
+        return $this->delete($this->table_name, (array) $id);
+    }
 }

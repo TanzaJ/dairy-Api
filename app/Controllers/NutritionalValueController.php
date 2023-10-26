@@ -2,6 +2,8 @@
 
 namespace Vanier\Api\Controllers;
 
+use Vanier\Api\Exceptions\HttpMissingDataException;
+use Vanier\Api\Helpers\Validator;
 use Vanier\Api\Models\NutritionalValueModel;
 use Fig\Http\Message\StatusCodeInterface as HttpCodes;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -36,4 +38,105 @@ class NutritionalValueController extends BaseController
         return $this->prepareOkResponse($response,(array) $nv_info);
     }
 
+    public function handleCreateNV(Request $request, Response $response)
+    {
+        $nvs = $request->getParsedBody();
+        if(!isset($nvs)) 
+        {
+            throw new HttpMissingDataException($request,
+            "Couldn't create nutritional values/process the request due to missing data.");
+        }
+        foreach($nvs as $key => $nv) {
+            $this->validateNV($nv);
+
+            $this->nv_model->addNV($nv);
+        }
+        $response_data = array(
+            "code" => HttpCodes::STATUS_CREATED,
+            "message"=>"The provided list of nutritional values entries have been successfully created!"
+    );
+        return $this->prepareOkResponse(
+            $response,
+            $response_data,
+            HttpCodes::STATUS_CREATED
+        );
+    }
+
+    public function handleUpdateNV(Request $request, Response $response, array $uri_args)
+    {
+        $nvs = $request->getParsedBody();
+        if(!isset($nvs)) 
+        {
+            throw new HttpMissingDataException($request,
+            "Couldn't update nutritional values/process the request due to missing data.");
+        }
+
+        foreach($nvs as $key => $nv) {
+            $id = $nv['nv_id'];
+            unset($nv['nv_id']);
+
+            $this->validateNV($nv);
+            
+            $this->nv_model->updateNV($nv, $id);
+        }
+        $response_data = array(
+            "code" => HttpCodes::STATUS_ACCEPTED,
+            "message"=>"The provided list of nutritional values entries has been successfully updated!"
+    );
+        return $this->prepareOkResponse(
+            $response,
+            $response_data,
+            HttpCodes::STATUS_ACCEPTED
+        );
+
+    }
+
+    public function deleteButter(Request $request, Response $response, array $uri_args)
+    {
+        $nvs = $request->getParsedBody(); 
+        foreach($nvs as $key => $nv) {
+        $id = $nv['nv_id'];
+        unset($nv['nv_id']);
+       
+        if($id < 0) {
+            //TODO: throw exception
+           // throw new HttpNoNegativeId($request, "Invalid id");
+        }
+
+        $this->nv_model->deleteNV($id);
+    }
+
+    $response_data = array(
+        "code" => HttpCodes::STATUS_ACCEPTED,
+        "message"=>"The provided list of brand entries have been successfully deleted!"
+    );
+    return $this->prepareOkResponse(
+        $response,
+        $response_data,
+        HttpCodes::STATUS_ACCEPTED
+    );
+    }
+    public function validateNV(array $nv) {
+        $rules = array(
+            'brand_id ' => array(
+                'required', 'int'
+            ),
+            'brand_name' => array(
+                'required',
+            ),
+            'country_id' => array(
+                'int'
+            )
+        );
+
+        $v = new Validator($nv);
+        $v->mapFieldsRules($rules);
+        if($v->validate()) {
+            echo "Data validated";
+        }else {
+            // Errors
+            echo $v->errorsToString();
+            echo $v->errorsToJson();
+        }
+    }
 }
