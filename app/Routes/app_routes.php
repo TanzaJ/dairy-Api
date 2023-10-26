@@ -47,6 +47,15 @@ $app->delete('/milk', [MilkController::class, 'deleteMilk']);
 //GET /cheese
 $app->get('/cheese', [CheeseController::class, 'handleGetCheese']);
 
+//POST /cheese
+$app->post('/cheese', [CheeseController::class, 'handleCreateCheese']);
+
+//PUT /cheese
+$app->put('/cheese', [CheeseController::class, 'handleUpdateCheese']);
+
+//DELETE /cheese
+$app->delete('/cheese', [CheeseController::class, 'deleteCheese']);
+
 //GET /ice_cream
 $app->get('/ice_cream', [IceCreamController::class, 'handleGetIceCream']);
 

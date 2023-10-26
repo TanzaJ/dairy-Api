@@ -37,4 +37,19 @@ class CheeseModel extends BaseModel
         return $this->paginate($sql, $filter_values);
     }
 
+    public function addCheese(array $new_entries)
+    {
+        return $this->insert($this->table_name, $new_entries);
+    }
+
+    public function updateModel(array $new_cheese_modify, int $id)
+    {
+        return $this->update($this->table_name, $new_cheese_modify, ['cheese_id'=> $id]);
+    }
+
+    public function deleteCheese(int $id)
+    {
+        return $this->delete($this->table_name, ['cheese_id'=> $id]);
+    }
+
 }
