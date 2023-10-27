@@ -91,7 +91,7 @@ class BrandController extends BaseController
 
     }
 
-    public function deleteButter(Request $request, Response $response, array $uri_args)
+    public function handleDeleteBrand(Request $request, Response $response, array $uri_args)
     {
         $butters = $request->getParsedBody(); 
         foreach($butters as $key => $butter) {
@@ -122,7 +122,7 @@ class BrandController extends BaseController
                 'required', 'int'
             ),
             'brand_name' => array(
-                'required',
+                'required'
             ),
             'country_id' => array(
                 'int'

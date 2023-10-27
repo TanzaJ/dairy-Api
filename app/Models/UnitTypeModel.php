@@ -5,6 +5,7 @@ use Vanier\Api\Models\BaseModel;
 
 class UnitTypeModel extends BaseModel
 {
+    private string $table_name = 'unit_type';
     public function __construct() {
         parent::__construct();
     }
@@ -26,5 +27,18 @@ class UnitTypeModel extends BaseModel
 
         return $this->paginate($sql, $filter_values);
     }
+    public function addUnitType(array $new_entries)
+    {
+        return $this->insert($this->table_name, $new_entries);
+    }
 
+    public function updateUnitType(array $new_unitType_value_modify, int $id)
+    {
+        return $this->update($this->table_name, $new_unitType_value_modify, (array) $id);
+    }
+
+    public function deleteUnitType(int $id)
+    {
+        return $this->delete($this->table_name, (array) $id);
+    }
 }

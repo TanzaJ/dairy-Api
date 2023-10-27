@@ -62,7 +62,7 @@ class IceCreamController extends BaseController
         );
     }
 
-    public function handleUpdateIceCreams(Request $request, Response $response, array $uri_args)
+    public function handleUpdateIceCream(Request $request, Response $response, array $uri_args)
     {
         $ice_creams = $request->getParsedBody();
         if(!isset($ice_creams)) 
@@ -91,7 +91,7 @@ class IceCreamController extends BaseController
 
     }
 
-    public function deleteIceCream(Request $request, Response $response, array $uri_args)
+    public function handleDeleteIceCream(Request $request, Response $response, array $uri_args)
     {
         $ice_creams = $request->getParsedBody(); 
         foreach($ice_creams as $key => $ice_cream) {

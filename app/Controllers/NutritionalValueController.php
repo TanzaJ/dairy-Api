@@ -91,7 +91,7 @@ class NutritionalValueController extends BaseController
 
     }
 
-    public function deleteButter(Request $request, Response $response, array $uri_args)
+    public function handleDeleteNV(Request $request, Response $response, array $uri_args)
     {
         $nvs = $request->getParsedBody(); 
         foreach($nvs as $key => $nv) {

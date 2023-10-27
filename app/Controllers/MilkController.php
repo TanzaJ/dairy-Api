@@ -92,7 +92,7 @@ class MilkController extends BaseController
 
     }
 
-    public function deleteMilk(Request $request, Response $response, array $uri_args)
+    public function handleDeleteMilk(Request $request, Response $response, array $uri_args)
     {
         $milks = $request->getParsedBody(); 
         foreach($milks as $key => $milk) {

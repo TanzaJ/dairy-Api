@@ -90,7 +90,7 @@ class CountryController extends BaseController
 
     }
 
-    public function deleteCountry(Request $request, Response $response, array $uri_args)
+    public function handleDeleteCountry(Request $request, Response $response, array $uri_args)
     {
         $countries = $request->getParsedBody(); 
         foreach($countries as $key => $country) {

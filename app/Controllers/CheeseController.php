@@ -91,7 +91,7 @@ class CheeseController extends BaseController
 
     }
 
-    public function deleteCheese(Request $request, Response $response, array $uri_args)
+    public function handleDeleteCheese(Request $request, Response $response, array $uri_args)
     {
         $cheeses = $request->getParsedBody(); 
         foreach($cheeses as $key => $cheese) {

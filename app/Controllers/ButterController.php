@@ -93,7 +93,7 @@ class ButterController extends BaseController
 
     }
 
-    public function deleteButter(Request $request, Response $response, array $uri_args)
+    public function handleDeleteButter(Request $request, Response $response, array $uri_args)
     {
         $butters = $request->getParsedBody(); 
         foreach($butters as $key => $butter) {
