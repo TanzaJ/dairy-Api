@@ -318,6 +318,18 @@ class BaseModel
 
         return $stmt->rowCount();
     }
+    /**
+     * Delete record by id
+     * 
+     * @param  string $table table name
+     * @param  integer $id id of record
+     */
+    protected function deleteIceCreamById($table, $id)
+    {
+        $stmt = $this->run("DELETE FROM $table WHERE ice_cream_id = ?", [$id]);
+
+        return $stmt->rowCount();
+    }
 
     /**
      * Delete record by ids

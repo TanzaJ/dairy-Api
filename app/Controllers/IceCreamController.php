@@ -14,6 +14,8 @@ use Vanier\Api\Models\IceCreamModel;
 
 class IceCreamController extends BaseController
 {
+
+    private array $errors = array();
     private $ice_cream_model =null;
 
     public function __construct() {
@@ -40,115 +42,166 @@ class IceCreamController extends BaseController
 
     public function handleCreateIceCream(Request $request, Response $response)
     {
-        $ice_creams = $request->getParsedBody();
-        if(!isset($ice_creams)) 
-        {
-            throw new HttpMissingDataException($request,
-            "Couldn't create ice cream/process the request due to missing data.");
-        }
-        foreach($ice_creams as $key => $ice_cream) {
-            $this->validateIceCream($ice_cream);
-
-            $this->ice_cream_model->addIceCream($ice_cream);
-        }
-        $response_data = array(
-            "code" => HttpCodes::STATUS_CREATED,
-            "message"=>"The provided list of ice cream entries have been successfully created!"
-    );
-        return $this->prepareOkResponse(
-            $response,
-            $response_data,
-            HttpCodes::STATUS_CREATED
-        );
-    }
-
-    public function handleUpdateIceCream(Request $request, Response $response, array $uri_args)
-    {
-        $ice_creams = $request->getParsedBody();
-        if(!isset($ice_creams)) 
-        {
-            throw new HttpMissingDataException($request,
-            "Couldn't update ice cream/process the request due to missing data.");
-        }
-
-        foreach($ice_creams as $key => $ice_cream) {
-            $id = $ice_cream['ice_cream_id'];
-            unset($ice_cream['ice_cream_id']);
-
-            $this->validateIceCream($ice_cream);
-            
-            $this->ice_cream_model->updateModel($ice_cream, $id);
-        }
-        $response_data = array(
-            "code" => HttpCodes::STATUS_ACCEPTED,
-            "message"=>"The provided list of ice cream entries has been successfully updated!"
-    );
-        return $this->prepareOkResponse(
-            $response,
-            $response_data,
-            HttpCodes::STATUS_ACCEPTED
-        );
-
-    }
-
-    public function handleDeleteIceCream(Request $request, Response $response, array $uri_args)
-    {
-        $ice_creams = $request->getParsedBody(); 
-        foreach($ice_creams as $key => $ice_cream) {
-        $id = $ice_cream['ice_cream_id'];
-        unset($ice_cream['ice_cream_id']);
-       
-        if($id < 0) {
-            //TODO: throw exception
-           // throw new HttpNoNegativeId($request, "Invalid id");
-        }
-
-        $this->ice_cream_model->deleteIceCream($id);
-    }
-
-    $response_data = array(
-        "code" => HttpCodes::STATUS_ACCEPTED,
-        "message"=>"The provided list of ice cream entries have been successfully deleted!"
-    );
-    return $this->prepareOkResponse(
-        $response,
-        $response_data,
-        HttpCodes::STATUS_ACCEPTED
-    );
-    }
-
-    public function validateIceCream(array $ice_cream) 
-    {
-        $rules = array(
-            'ice_cream_id' => array(
-                'required', 'int'
-            ),
+         $rules = array(
             'milk_id' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'product_name' => array(
                 'required'
             ),
             'country_id' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'brand_id' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'nutritional_value_id' => array(
-                'required', 'int'
+                'required', 'integer'
             )
         );
+        $isError = false;
+        $ice_creams = $request->getParsedBody();
+        if(empty($ice_creams))
+        {
+        }
+        foreach ($ice_creams as $key => $ice_cream){
+            $validation_response = $this->isValidData($ice_cream, $rules);
+            if($validation_response === true){
+                $this->ice_cream_model->addIceCream($ice_cream);
 
-        $v = new Validator($ice_cream);
-        $v->mapFieldsRules($rules);
-        if($v->validate()) {
-            echo "Data validated";
-        }else {
-            // Errors
-            echo $v->errorsToString();
-            echo $v->errorsToJson();
+            }
+            else {
+                $isError = true;
+                array_push($this->errors, $validation_response);
+
+            }
+        }
+        if ($isError){
+            $message = "";
+            foreach ($this->errors as $key => $error){
+                $message .= $error . "---";
+            }
+
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => $message,
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
+        else{
+            $response_data = array(
+                "code" => HttpCodes::STATUS_CREATED,
+                "message" => "The list of Ice Creams has been successfully created",
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_CREATED
+            );
         }
     }
 
+    public function handleUpdateIceCream(Request $request, Response $response, array $uri_args)
+    {
+        $ice_creams = $request->getParsedBody();
+        $rules = array(
+            'milk_id' => array(
+                'required', 'integer'
+            ),
+            'product_name' => array(
+                'required'
+            ),
+            'country_id' => array(
+                'required', 'integer'
+            ),
+            'brand_id' => array(
+                'required', 'integer'
+            ),
+            'nutritional_value_id' => array(
+                'required', 'integer'
+            )
+        );
+        $isError = false;
+        foreach ($ice_creams as $key => $ice_cream){
+            $validation_response = $this->isValidData($ice_cream, $rules);
+            if($validation_response === true){
+                $id = $ice_cream['ice_cream_id'];
+                unset($ice_cream['ice_cream_id']);
+
+                $this->ice_cream_model->updateModel($ice_cream, $id);
+            }
+            else {
+                $isError = true;
+                array_push($this->errors, $validation_response);
+            }
+        }
+        if ($isError){
+            $message = "";
+            foreach ($this->errors as $key => $error){
+                $message .= $error . "---";
+            }
+
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => $message,
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
+        else{
+            $response_data = array(
+                "code" => HttpCodes::STATUS_CREATED,
+                "message" => "The list of Ice Creams has been successfully updated",
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_CREATED
+            );
+        }
+    }
+
+    public function handleDeleteIceCream(Request $request, Response $response, array $uri_args)
+    {
+        $isError = false;
+        $ice_cream_id = $uri_args['ice_cream_id'];
+        $validation_id = $this->isValidId($ice_cream_id);
+        if ($validation_id === true){
+            $this->ice_cream_model->deleteIceCream($ice_cream_id);
+        }
+        else{
+            $isError = true;
+        }
+
+        if ($isError){
+            $message = "Id is not valid: " . $ice_cream_id;
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => $message,
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
+        else{
+            $response_data = array(
+                "code" => HttpCodes::STATUS_CREATED,
+                "message" => "The provided list of ice cream entries have been successfully deleted!",
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_CREATED
+            );
+        }
+    }
 }

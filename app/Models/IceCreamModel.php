@@ -50,7 +50,7 @@ class IceCreamModel extends BaseModel
 
     public function deleteIceCream(int $id)
     {
-        return $this->delete($this->table_name, (array) $id);
+        return $this->deleteIceCreamById($this->table_name, $id);
     }
 
 

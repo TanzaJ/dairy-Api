@@ -58,7 +58,7 @@ $app->get('/ice_cream', [IceCreamController::class, 'handleGetIceCream']);
 //POST /ice_cream
 $app->post('/ice_cream', [IceCreamController::class, 'handleCreateIceCream']);
 //PUT /ice_cream
-$app->put('/ice_cream/{ice_cream_id}', [IceCreamController::class, 'handleUpdateIceCream']);
+$app->put('/ice_cream', [IceCreamController::class, 'handleUpdateIceCream']);
 //DELETE /ice_cream
 $app->delete('/ice_cream/{ice_cream_id}', [IceCreamController::class, 'handleDeleteIceCream']);
 
@@ -73,51 +73,51 @@ $app->put('/butter/{butter_id}', [ButterController::class, 'handleUpdateButter']
 $app->delete('/butter/{butter_id}', [ButterController::class, 'handleDeleteButter']);
 
 
-//GET /brand
-$app->get('/brand', [BrandController::class, 'handleGetBrand']);
-//POST /brand
-$app->get('/brand', [BrandController::class, 'handleCreateBrand']);
-//PUT /brand
-$app->get('/milk/{brand_id}/brand', [BrandController::class, 'handleUpdateBrand']);
-//DELETE /brand
-$app->get('/milk/{brand_id}/brand', [BrandController::class, 'handleDeleteBrand']);
+// //GET /brand
+// $app->get('/brand', [BrandController::class, 'handleGetBrand']);
+// //POST /brand
+// // $app->get('/brand', [BrandController::class, 'handleCreateBrand']);
+// //PUT /brand
+// $app->get('/milk/{brand_id}/brand', [BrandController::class, 'handleUpdateBrand']);
+// //DELETE /brand
+// $app->get('/milk/{brand_id}/brand', [BrandController::class, 'handleDeleteBrand']);
 
 
-//GET /country
-$app->get('/country', [CountryController::class, 'handleGetCountry']);
-//POST /country
-$app->get('/country', [CountryController::class, 'handleCreateCountry']);
-//PUT /country
-$app->get('/milk/{country_id}/country', [CountryController::class, 'handleUpdateCountry']);
-//DELETE /country
-$app->get('/milk/{country_id}/country', [CountryController::class, 'handleDeleteCountry']);
+// //GET /country
+// $app->get('/country', [CountryController::class, 'handleGetCountry']);
+// //POST /country
+// $app->get('/country', [CountryController::class, 'handleCreateCountry']);
+// //PUT /country
+// $app->get('/milk/{country_id}/country', [CountryController::class, 'handleUpdateCountry']);
+// //DELETE /country
+// $app->get('/milk/{country_id}/country', [CountryController::class, 'handleDeleteCountry']);
 
 
-//GET /projectedMilkProduction
-$app->get('/projected_milk_production', [ProjMilkController::class, 'handleGetProjMilk']);
-//POST /country
-$app->get('/projected_milk_production', [ProjMilkController::class, 'handleCreateProjMilk']);
-//PUT /country
-$app->get('/milk/{projMilk_id}/projected_milk_production', [ProjMilkController::class, 'handleUpdateProjMilk']);
-//DELETE /country
-$app->get('/milk/{projMilk_id}/projected_milk_production', [ProjMilkController::class, 'handleDeleteProjMilk']);
+// //GET /projectedMilkProduction
+// $app->get('/projected_milk_production', [ProjMilkController::class, 'handleGetProjMilk']);
+// //POST /country
+// $app->get('/projected_milk_production', [ProjMilkController::class, 'handleCreateProjMilk']);
+// //PUT /country
+// $app->get('/milk/{projMilk_id}/projected_milk_production', [ProjMilkController::class, 'handleUpdateProjMilk']);
+// //DELETE /country
+// $app->get('/milk/{projMilk_id}/projected_milk_production', [ProjMilkController::class, 'handleDeleteProjMilk']);
 
 
-//GET /nutritional_value
-$app->get('/nutritional_value', [NutritionalValueController::class, 'handleGetNV']);
-//POST /country
-$app->get('/nutritional_value', [NutritionalValueController::class, 'handleCreateNV']);
-//PUT /country
-$app->get('/milk/{nv_id}/nutritional_value', [NutritionalValueController::class, 'handleUpdateNV']);
-//DELETE /country
-$app->get('/milk/{nv_id}/nutritional_value', [NutritionalValueController::class, 'handleDeleteNV']);
+// //GET /nutritional_value
+// $app->get('/nutritional_value', [NutritionalValueController::class, 'handleGetNV']);
+// //POST /country
+// $app->get('/nutritional_value', [NutritionalValueController::class, 'handleCreateNV']);
+// //PUT /country
+// $app->get('/milk/{nv_id}/nutritional_value', [NutritionalValueController::class, 'handleUpdateNV']);
+// //DELETE /country
+// $app->get('/milk/{nv_id}/nutritional_value', [NutritionalValueController::class, 'handleDeleteNV']);
 
 
-//GET /unit_type
-$app->get('/unit_type', [UnitTypeController::class, 'handleGetUnitType']);
-//POST /country
-$app->get('/unit_type', [UnitTypeController::class, 'handleCreateUnitType']);
-//PUT /country
-$app->get('/milk/{unitType_id}/unit_type', [UnitTypeController::class, 'handleUpdateUnitType']);
-//DELETE /country
-$app->get('/milk/{unitType_id}/unit_type', [UnitTypeController::class, 'handleDeleteUnitType']);
+// //GET /unit_type
+// $app->get('/unit_type', [UnitTypeController::class, 'handleGetUnitType']);
+// //POST /country
+// $app->get('/unit_type', [UnitTypeController::class, 'handleCreateUnitType']);
+// //PUT /country
+// $app->get('/milk/{unitType_id}/unit_type', [UnitTypeController::class, 'handleUpdateUnitType']);
+// //DELETE /country
+// $app->get('/milk/{unitType_id}/unit_type', [UnitTypeController::class, 'handleDeleteUnitType']);
