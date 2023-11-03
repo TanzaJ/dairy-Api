@@ -72,7 +72,7 @@ class NutritionalValueController extends BaseController
         }
 
         foreach($nvs as $key => $nv) {
-            $id = $nv['nv_id'];
+            $id = ['nv_id' => $nv['nv_id']];
             unset($nv['nv_id']);
 
             $this->validateNV($nv);
@@ -95,16 +95,16 @@ class NutritionalValueController extends BaseController
     {
         $nvs = $request->getParsedBody(); 
         foreach($nvs as $key => $nv) {
-        $id = $nv['nv_id'];
-        unset($nv['nv_id']);
-       
-        if($id < 0) {
-            //TODO: throw exception
-           // throw new HttpNoNegativeId($request, "Invalid id");
-        }
+            $id = ['nv_id' => $nv['nv_id']];
+            unset($nv['nv_id']);
+        
+            if($id < 0) {
+                //TODO: throw exception
+            // throw new HttpNoNegativeId($request, "Invalid id");
+            }
 
-        $this->nv_model->deleteNV($id);
-    }
+            $this->nv_model->deleteNV($id);
+        }
 
     $response_data = array(
         "code" => HttpCodes::STATUS_ACCEPTED,

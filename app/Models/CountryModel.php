@@ -52,13 +52,13 @@ class CountryModel extends BaseModel
         return $this->insert($this->table_name, $new_entries);
     }
 
-    public function updateCountry(array $new_country_modify, int $id)
+    public function updateCountry(array $new_country_modify, array $id)
     {
-        return $this->update($this->table_name, $new_country_modify, (array) $id);
+        return $this->update($this->table_name, $new_country_modify, $id);
     }
 
-    public function deleteCountry(int $id)
+    public function deleteCountry(array $id)
     {
-        return $this->delete($this->table_name, (array) $id);
+        return $this->delete($this->table_name, $id);
     }
 }

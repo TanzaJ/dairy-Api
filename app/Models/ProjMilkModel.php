@@ -46,13 +46,13 @@ class ProjMilkModel extends BaseModel
         return $this->insert($this->table_name, $new_entries);
     }
 
-    public function updateProjMilk(array $new_projMilk_value_modify, int $id)
+    public function updateProjMilk(array $new_projMilk_value_modify, array $id)
     {
-        return $this->update($this->table_name, $new_projMilk_value_modify, (array) $id);
+        return $this->update($this->table_name, $new_projMilk_value_modify, $id);
     }
 
-    public function deleteProjMilk(int $id)
+    public function deleteProjMilk(array $id)
     {
-        return $this->delete($this->table_name, (array) $id);
+        return $this->delete($this->table_name, $id);
     }
 }

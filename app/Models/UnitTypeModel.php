@@ -32,13 +32,13 @@ class UnitTypeModel extends BaseModel
         return $this->insert($this->table_name, $new_entries);
     }
 
-    public function updateUnitType(array $new_unitType_value_modify, int $id)
+    public function updateUnitType(array $new_unitType_value_modify, array $id)
     {
-        return $this->update($this->table_name, $new_unitType_value_modify, (array) $id);
+        return $this->update($this->table_name, $new_unitType_value_modify, $id);
     }
 
-    public function deleteUnitType(int $id)
+    public function deleteUnitType(array $id)
     {
-        return $this->delete($this->table_name, (array) $id);
+        return $this->delete($this->table_name, $id);
     }
 }

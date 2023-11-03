@@ -38,6 +38,15 @@ class BrandController extends BaseController
         $brand_info = $this->brand_model->getAll($filters);
         return $this->prepareOkResponse($response,(array) $brand_info);
     }
+
+    /* [
+        {
+          "brand_id": 52,
+          "brand_name": "Kerrygolds",
+          "country_id": 124
+        }
+    ] */
+
     public function handleCreateBrand(Request $request, Response $response)
     {
         $brands = $request->getParsedBody();
@@ -71,12 +80,11 @@ class BrandController extends BaseController
         }
 
         foreach($brands as $key => $brand) {
-            $id = $brand['brand_id'];
+            $where = ['brand_id' => $brand['brand_id']];
             unset($brand['brand_id']);
-
             $this->validateBrand($brand);
             
-            $this->brand_model->updateBrand($brand, $id);
+            $this->brand_model->updateBrand($brand, $where);
         }
         $response_data = array(
             "code" => HttpCodes::STATUS_ACCEPTED,
@@ -87,23 +95,23 @@ class BrandController extends BaseController
             $response_data,
             HttpCodes::STATUS_ACCEPTED
         );
-
     }
 
     public function handleDeleteBrand(Request $request, Response $response, array $uri_args)
     {
-        $butters = $request->getParsedBody(); 
-        foreach($butters as $key => $butter) {
-        $id = $butter['brand_id'];
-        unset($butter['brand_id']);
-       
-        if($id < 0) {
-            //TODO: throw exception
-           // throw new HttpNoNegativeId($request, "Invalid id");
-        }
+        $brands = $request->getParsedBody(); 
+        foreach($brands as $key => $brand) {
 
-        $this->brand_model->deleteBrand($id);
-    }
+            $id = $brand['brand_id'];
+            $where = ['brand_id' => $brand['brand_id']];
+            unset($brand['brand_id']);
+            if($id < 0) {
+                //TODO: throw exception
+                // throw new HttpNoNegativeId($request, "Invalid id");
+            }
+
+            $this->brand_model->deleteBrand($where);
+        }
 
     $response_data = array(
         "code" => HttpCodes::STATUS_ACCEPTED,
@@ -118,13 +126,13 @@ class BrandController extends BaseController
     public function validateBrand(array $brand) {
         $rules = array(
             'brand_id ' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'brand_name' => array(
                 'required'
             ),
             'country_id' => array(
-                'int'
+                'integer'
             )
         );
 

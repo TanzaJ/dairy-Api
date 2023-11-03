@@ -72,7 +72,7 @@ class ProjMilkController extends BaseController
         }
 
         foreach($projMilks as $key => $projMilk) {
-            $id = $projMilk['projMilk_id'];
+            $id = ['projMilk_id' => $projMilk['projMilk_id']];
             unset($projMilk['projMilk_id']);
 
             $this->validateProjMilk($projMilk);
@@ -95,7 +95,7 @@ class ProjMilkController extends BaseController
     {
         $projMilks = $request->getParsedBody(); 
         foreach($projMilks as $key => $projMilk) {
-        $id = $projMilk['projMilk_id'];
+        $id = ['projMilk_id' => $projMilk['projMilk_id']];
         unset($projMilk['projMilk_id']);
        
         if($id < 0) {

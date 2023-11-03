@@ -72,7 +72,7 @@ class CountryController extends BaseController
         }
 
         foreach($countries as $key => $country) {
-            $id = $country['country_id'];
+            $id = ['country_id' => $country['country_id']];
             unset($country['country_id']);
 
             $this->validateCountry($country);
@@ -94,7 +94,7 @@ class CountryController extends BaseController
     {
         $countries = $request->getParsedBody(); 
         foreach($countries as $key => $country) {
-        $id = $country['country_id'];
+        $id = ['country_id' => $country['country_id']];
         unset($country['country_id']);
        
         if($id < 0) {

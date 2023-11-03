@@ -72,7 +72,7 @@ class UnitTypeController extends BaseController
         }
 
         foreach($unitTypes as $key => $unitType) {
-            $id = $unitType['unitType_id'];
+            $id = ['unitType_id' => $unitType['unitType_id']];
             unset($unitType['unitType_id']);
 
             $this->validateUnitType($unitType);
@@ -95,7 +95,7 @@ class UnitTypeController extends BaseController
     {
         $unitTypes = $request->getParsedBody(); 
         foreach($unitTypes as $key => $unitType) {
-        $id = $unitType['unitType_id'];
+        $id = ['unitType_id' => $unitType['unitType_id']];
         unset($unitType['unitType_id']);
        
         if($id < 0) {

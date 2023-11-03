@@ -83,8 +83,8 @@ $app->put('/milk/{brand_id}/brand', [BrandController::class, 'handleUpdateBrand'
 $app->delete('/milk/{brand_id}/brand', [BrandController::class, 'handleDeleteBrand']);
 
 
-// //GET /country
-// $app->get('/country', [CountryController::class, 'handleGetCountry']);
+//GET /country
+$app->get('/country', [CountryController::class, 'handleGetCountry']);
 // //POST /country
 // $app->post('/country', [CountryController::class, 'handleCreateCountry']);
 // //PUT /country
@@ -93,8 +93,8 @@ $app->delete('/milk/{brand_id}/brand', [BrandController::class, 'handleDeleteBra
 // $app->delete('/milk/{country_id}/country', [CountryController::class, 'handleDeleteCountry']);
 
 
-// //GET /projectedMilkProduction
-// $app->get('/projected_milk_production', [ProjMilkController::class, 'handleGetProjMilk']);
+//GET /projectedMilkProduction
+$app->get('/projected_milk_production', [ProjMilkController::class, 'handleGetProjMilk']);
 // //POST /country
 // $app->post('/projected_milk_production', [ProjMilkController::class, 'handleCreateProjMilk']);
 // //PUT /country
@@ -103,8 +103,8 @@ $app->delete('/milk/{brand_id}/brand', [BrandController::class, 'handleDeleteBra
 // $app->delete('/milk/{projMilk_id}/projected_milk_production', [ProjMilkController::class, 'handleDeleteProjMilk']);
 
 
-// //GET /nutritional_value
-// $app->get('/nutritional_value', [NutritionalValueController::class, 'handleGetNV']);
+//GET /nutritional_value
+$app->get('/nutritional_value', [NutritionalValueController::class, 'handleGetNV']);
 // //POST /country
 // $app->post('/nutritional_value', [NutritionalValueController::class, 'handleCreateNV']);
 // //PUT /country
@@ -113,8 +113,8 @@ $app->delete('/milk/{brand_id}/brand', [BrandController::class, 'handleDeleteBra
 // $app->delete('/milk/{nv_id}/nutritional_value', [NutritionalValueController::class, 'handleDeleteNV']);
 
 
-// //GET /unit_type
-// $app->get('/unit_type', [UnitTypeController::class, 'handleGetUnitType']);
+//GET /unit_type
+$app->get('/unit_type', [UnitTypeController::class, 'handleGetUnitType']);
 // //POST /country
 // $app->post('/unit_type', [UnitTypeController::class, 'handleCreateUnitType']);
 // //PUT /country
