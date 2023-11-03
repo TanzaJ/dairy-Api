@@ -48,9 +48,9 @@ $app->get('/cheese', [CheeseController::class, 'handleGetCheese']);
 //POST /cheese
 $app->post('/cheese', [CheeseController::class, 'handleCreateCheese']);
 //PUT /cheese
-$app->put('/cheese/{cheese_id}', [CheeseController::class, 'handleUpdateCheese']);
+$app->put('/cheese', [CheeseController::class, 'handleUpdateCheese']);
 //DELETE /cheese
-$app->delete('/cheese/{cheese_id}', [CheeseController::class, 'handleDeleteCheese']);
+$app->delete('/cheese', [CheeseController::class, 'handleDeleteCheese']);
 
 
 //GET /ice_cream
