@@ -14,6 +14,8 @@ use Slim\Exception\HttpBadRequestException;
 
 class MilkController extends BaseController
 {
+
+    private array $errors = array();
     private $milk_model =null;
 
     public function __construct() {
@@ -41,81 +43,208 @@ class MilkController extends BaseController
 
     public function handleCreateMilk(Request $request, Response $response)
     {
+        //Rules
+        $rules = array(
+            'milk_id' => array(
+                'required', 'integer'
+            ),
+            'name' => array(
+                'required'
+            ),
+            'average_cost' => array(
+                'required', 'numeric'
+            ),
+            'place_of_origin' => array(
+                'required'
+            ),
+            'year_created' => array(
+                'required',  'integer'
+            ),
+            'country_id' => array(
+                'required', 'integer'
+            ),
+            'brand_id' => array(
+                'required', 'integer'
+            ),
+            'nutritional_value_id' => array(
+                'required', 'integer'
+            )
+        );
+
+        $isError = false;
+
+        //Parse request body
         $milks = $request->getParsedBody();
-        if(!isset($milks)) 
+
+        //Checks if empty
+        if(empty($milks) || isset($milk))
         {
             throw new HttpMissingDataException($request,
             "Couldn't create milks/process the request due to missing data.");
         }
-        foreach($milks as $key => $milk) {
-            $this->validateMilk($milk);
 
-            $this->milk_model->addMilk($milk);
+
+        foreach ($milks as $key => $milk){
+            $validation_response = $this->isValidData($milk, $rules);
+            if($validation_response === true){
+                $this->milk_model->addMilk($milk);
+
+            }
+            else {
+                $isError = true;
+                array_push($this->errors, $validation_response);
+
+            }
         }
-        $response_data = array(
-            "code" => HttpCodes::STATUS_CREATED,
-            "message"=>"The provided list of milk entries have been successfully created!"
-    );
-        return $this->prepareOkResponse(
-            $response,
-            $response_data,
-            HttpCodes::STATUS_CREATED
-        );
+
+        if ($isError){
+            $message = "";
+            foreach ($this->errors as $key => $error){
+                $message .= $error . "---";
+            }
+
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => $message,
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
+        else{
+            $response_data = array(
+                "code" => HttpCodes::STATUS_CREATED,
+                "message" => "The list of Milks has been successfully created",
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_CREATED
+            );
+        }
     }
 
     public function handleUpdateMilk(Request $request, Response $response, array $uri_args)
     {
+        //Rules
+        $rules = array(
+            'milk_id' => array(
+                'required', 'integer'
+            ),
+            'name' => array(
+                'required'
+            ),
+            'average_cost' => array(
+                'required', 'numeric'
+            ),
+            'place_of_origin' => array(
+                'required'
+            ),
+            'year_created' => array(
+                'required',  'integer'
+            ),
+            'country_id' => array(
+                'required', 'integer'
+            ),
+            'brand_id' => array(
+                'required', 'integer'
+            ),
+            'nutritional_value_id' => array(
+                'required', 'integer'
+            )
+        );
+
+        $isError = false;
+
+        //Parse request body
         $milks = $request->getParsedBody();
-        if(!isset($milks)) 
+
+        //Checks if empty
+        if(empty($milks) || isset($milk))
         {
             throw new HttpMissingDataException($request,
-            "Couldn't update milk/process the request due to missing data.");
+            "Couldn't update milks/process the request due to missing data.");
         }
 
-        foreach($milks as $key => $milk) {
-            $id = $milk['milk_id'];
-            unset($milk['milk_id']);
-
-            $this->validateMilk($milk);
-            
-            $this->milk_model->updateModel($milk, $id);
+        foreach ($milks as $key => $milk){
+            $validation_response = $this->isValidData($milk, $rules);
+            if($validation_response === true){
+                $id = $milk['milk_id'];
+                unset($milk['milk_id']);
+                $this->milk_model->updateModel($milk, $id);
+            }
+            else {
+                $isError = true;
+                array_push($this->errors, $validation_response);
+            }
         }
-        $response_data = array(
-            "code" => HttpCodes::STATUS_ACCEPTED,
-            "message"=>"The provided list of milk has been successfully updated!"
-    );
-        return $this->prepareOkResponse(
-            $response,
-            $response_data,
-            HttpCodes::STATUS_ACCEPTED
-        );
+        if ($isError){
+            $message = "";
+            foreach ($this->errors as $key => $error){
+                $message .= $error . "---";
+            }
+
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => $message,
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
+        else{
+            $response_data = array(
+                "code" => HttpCodes::STATUS_CREATED,
+                "message" => "The list of Milks has been successfully updated",
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_CREATED
+            );
+        }
 
     }
 
     public function handleDeleteMilk(Request $request, Response $response, array $uri_args)
     {
-        $milks = $request->getParsedBody(); 
-        foreach($milks as $key => $milk) {
-        $id = $milk['milk_id'];
-        unset($milk['milk_id']);
-       
-        if($id < 0) {
-            //TODO: throw exception
-           // throw new HttpNoNegativeId($request, "Invalid id");
+        $isError = false;
+        $milk_id = $uri_args['milk_id'];
+        $validation_id = $this->isValidId($milk_id);
+        if ($validation_id === true){
+            $this->milk_model->deleteMilk($milk_id);
+        }
+        else{
+            $isError = true;
         }
 
-        $this->milk_model->deleteMilk($id);
-    }
-
-    $response_data = array(
-        "code" => HttpCodes::STATUS_ACCEPTED,
-        "message"=>"The provided list of milk entries have been successfully deleted!"
-    );
-    return $this->prepareOkResponse(
-        $response,
-        $response_data,
-        HttpCodes::STATUS_ACCEPTED
-    );
+        if ($isError){
+            $message = "Id is not valid: " . $milk_id;
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => $message,
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
+        else{
+            $response_data = array(
+                "code" => HttpCodes::STATUS_CREATED,
+                "message" => "The provided list of milk entries have been successfully deleted!",
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_CREATED
+            );
+        }
     }
 
     public function validateMilk(array $milk) 

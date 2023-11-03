@@ -38,7 +38,7 @@ $app->get('/milk', [MilkController::class, 'handleGetMilk']);
 //POST /milk
 $app->post('/milk', [MilkController::class, 'handleCreateMilk']);
 //PUT /milk
-$app->put('/milk/{milk_id}', [MilkController::class, 'handleUpdateMilk']);
+$app->put('/milk', [MilkController::class, 'handleUpdateMilk']);
 //DELETE /milk
 $app->delete('/milk/{milk_id}', [MilkController::class, 'handleDeleteMilk']);
 

@@ -62,13 +62,20 @@ class MilkModel extends BaseModel
         return $this->insert($this->table_name, $new_entries);
     }
 
-    public function updateModel(array $new_milk_modify, int $id)
+    // public function updateModel(array $new_milk_modify, int $id)
+    // {
+    //     return $this->update($this->table_name, $new_milk_modify, (array) $id);
+    // }
+    public function updateModel(array $data, int $milk_id)
     {
-        return $this->update($this->table_name, $new_milk_modify, (array) $id);
+        $where = ['milk_id' => $milk_id];
+        return $this->update($this->table_name, $data, $where);
     }
 
     public function deleteMilk(int $id)
     {
-        return $this->delete($this->table_name, (array) $id);
+        // return $this->delete($this->table_name, (array) $id);
+        $where = ['milk_id' => $id]; 
+        return $this->delete($this->table_name, $where);
     }
 }
