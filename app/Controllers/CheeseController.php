@@ -48,7 +48,7 @@ class CheeseController extends BaseController
             "Couldn't create cheese/process the request due to missing data.");
         }
         foreach($cheeses as $key => $cheese) {
-           // $this->validateCheese($cheese);
+            $this->validateCheese($cheese);
 
             $this->cheese_model->addCheese($cheese);
         }
@@ -119,23 +119,20 @@ class CheeseController extends BaseController
     public function validateCheese(array $cheese)
     {
         $rules = array(
-            'cheese_id' => array(
-                'required', 'int'
-            ),
             'milk_id' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'product_name' => array(
                 'required'
             ),
             'country_id' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'brand_id' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'nutritional_value_id' => array(
-                'required', 'int'
+                'required', 'integer'
             )
         );
         $v = new Validator($cheese);

@@ -13,10 +13,15 @@ class CheeseModel extends BaseModel
     public function getAll( array $filters) {
         $filter_values = [];
        
-       $sql = "SELECT cheese.*,  country.country_name, brand.brand_name
+       $sql = "SELECT cheese.product_name, milk.name AS milk_name, country.country_name, brand.brand_name, 
+       nutritional_value.kcal, nutritional_value.fiber, nutritional_value.cholesterol, 
+       nutritional_value.carbohydrate, nutritional_value.protein, nutritional_value.monosat_fat, 
+       nutritional_value.polysat_fat, nutritional_value.sat_fat
         FROM $this->table_name AS cheese
         JOIN country ON cheese.country_id = country.country_id
         JOIN brand ON cheese.brand_id = brand.brand_id
+        JOIN milk ON cheese.milk_id = milk.milk_id
+        JOIN nutritional_value ON cheese.nutritional_value_id = nutritional_value.nutritional_value_id
         WHERE 1";
 
         if(isset($filters['product_name']))
