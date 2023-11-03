@@ -43,8 +43,7 @@ class BrandController extends BaseController
         $brands = $request->getParsedBody();
         if(!isset($brands)) 
         {
-            throw new HttpMissingDataException($request,
-            "Couldn't create brands/process the request due to missing data.");
+            throw new HttpMissingDataException($request, "Couldn't create brands/process the request due to missing data.");
         }
         foreach($brands as $key => $brand) {
             $this->validateBrand($brand);
