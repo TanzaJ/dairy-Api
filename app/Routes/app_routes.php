@@ -78,9 +78,9 @@ $app->get('/brand', [BrandController::class, 'handleGetBrand']);
 // POST /brand
 $app->post('/brand', [BrandController::class, 'handleCreateBrand']);
 // PUT /brand
-$app->put('/milk/{brand_id}/brand', [BrandController::class, 'handleUpdateBrand']);
+$app->put('/brand/{brand_id}', [BrandController::class, 'handleUpdateBrand']);
 // DELETE /brand
-$app->delete('/milk/{brand_id}/brand', [BrandController::class, 'handleDeleteBrand']);
+$app->delete('/brand/{brand_id}', [BrandController::class, 'handleDeleteBrand']);
 
 
 //GET /country
