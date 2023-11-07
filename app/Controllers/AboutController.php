@@ -10,7 +10,7 @@ class AboutController extends BaseController
     public function handleAboutApi(Request $request, Response $response, array $uri_args)
     {
         $data = array(
-            'about' => 'Welcome, this is a Web service that provides this and that...',
+            'about' => 'Welcome, this is a Web service that provides data regarding dairy products',
             'resources' => 'Blah'
         );                
         return $this->prepareOkResponse($response, $data);
