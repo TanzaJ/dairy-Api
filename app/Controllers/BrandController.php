@@ -126,7 +126,7 @@ class BrandController extends BaseController
     public function validateBrand(array $brand) {
         $rules = array(
             'brand_id ' => array(
-                'required', 'integer'
+                'integer'
             ),
             'brand_name' => array(
                 'required'

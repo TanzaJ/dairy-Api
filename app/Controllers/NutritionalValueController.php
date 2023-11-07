@@ -40,26 +40,93 @@ class NutritionalValueController extends BaseController
 
     public function handleCreateNV(Request $request, Response $response)
     {
-        $nvs = $request->getParsedBody();
-        if(!isset($nvs)) 
-        {
-            throw new HttpMissingDataException($request,
-            "Couldn't create nutritional values/process the request due to missing data.");
-        }
-        foreach($nvs as $key => $nv) {
-            $this->validateNV($nv);
-
-            $this->nv_model->addNV($nv);
-        }
-        $response_data = array(
-            "code" => HttpCodes::STATUS_CREATED,
-            "message"=>"The provided list of nutritional values entries have been successfully created!"
-    );
-        return $this->prepareOkResponse(
-            $response,
-            $response_data,
-            HttpCodes::STATUS_CREATED
+        $rules = array(
+            'kcal ' => array(
+                'required', 'integer'
+            ),
+            'fiber' => array(
+                'required', 'integer'
+            ),
+            'cholesterol' => array(
+                'required', 'integer'
+            ),
+            'carbohydrate ' => array(
+                'required', 'integer'
+            ),
+            'protein' => array(
+                'required', 'integer'
+            ),
+            'monosat_fat' => array(
+                'required', 'integer'
+            ),
+            'polysat_fat ' => array(
+                'required', 'integer'
+            ),
+            'sat_fat' => array(
+                'required', 'integer'
+            )
         );
+        $isError = false;
+        $nvs = $request->getParsedBody();
+        $isEmpty = false;
+        
+        if ($nvs != null && $nvs != '') {
+            foreach ($nvs as $key => $nv){
+                $validation_response = $this->isValidData($nv, $rules);
+                if($validation_response === true){
+                    $this->nv_model->addIceCream($nv);
+    
+                }
+                else {
+                    $isError = true;
+                    array_push($this->errors, $validation_response);
+    
+                }
+            }
+        }
+        else{
+            $isEmpty = true;
+        }
+
+        if ($isError){
+            $message = "";
+            foreach ($this->errors as $key => $error){
+                $message .= $error . "---";
+            }
+
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => $message,
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
+        else if ($isEmpty){
+
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => 'The body of the request is invalid',
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
+        else{
+            $response_data = array(
+                "code" => HttpCodes::STATUS_CREATED,
+                "message" => "The list of Ice Creams has been successfully created",
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_CREATED
+            );
+        }
     }
 
     public function handleUpdateNV(Request $request, Response $response, array $uri_args)
@@ -119,7 +186,7 @@ class NutritionalValueController extends BaseController
     public function validateNV(array $nv) {
         $rules = array(
             'brand_id ' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'brand_name' => array(
                 'required',

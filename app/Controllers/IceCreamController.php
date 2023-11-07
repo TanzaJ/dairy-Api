@@ -61,21 +61,26 @@ class IceCreamController extends BaseController
         );
         $isError = false;
         $ice_creams = $request->getParsedBody();
-        if(empty($ice_creams))
-        {
-        }
-        foreach ($ice_creams as $key => $ice_cream){
-            $validation_response = $this->isValidData($ice_cream, $rules);
-            if($validation_response === true){
-                $this->ice_cream_model->addIceCream($ice_cream);
-
+        $isEmpty = false;
+        
+        if ($ice_creams != null && $ice_creams != '') {
+            foreach ($ice_creams as $key => $ice_cream){
+                $validation_response = $this->isValidData($ice_cream, $rules);
+                if($validation_response === true){
+                    $this->ice_cream_model->addIceCream($ice_cream);
+    
+                }
+                else {
+                    $isError = true;
+                    array_push($this->errors, $validation_response);
+    
+                }
             }
-            else {
-                $isError = true;
-                array_push($this->errors, $validation_response);
-
-            }
         }
+        else{
+            $isEmpty = true;
+        }
+
         if ($isError){
             $message = "";
             foreach ($this->errors as $key => $error){
@@ -85,6 +90,18 @@ class IceCreamController extends BaseController
             $response_data = array(
                 "code" => HttpCodes::STATUS_BAD_REQUEST,
                 "message" => $message,
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
+        else if ($isEmpty){
+
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => 'The body of the request is invalid',
             );
             return $this->prepareOkResponse(
                 $response,
@@ -126,19 +143,27 @@ class IceCreamController extends BaseController
             )
         );
         $isError = false;
-        foreach ($ice_creams as $key => $ice_cream){
-            $validation_response = $this->isValidData($ice_cream, $rules);
-            if($validation_response === true){
-                $id = $ice_cream['ice_cream_id'];
-                unset($ice_cream['ice_cream_id']);
-
-                $this->ice_cream_model->updateModel($ice_cream, $id);
-            }
-            else {
-                $isError = true;
-                array_push($this->errors, $validation_response);
+        $isEmpty = false;
+        
+        if ($ice_creams != null && $ice_creams != '') {
+            foreach ($ice_creams as $key => $ice_cream){
+                $validation_response = $this->isValidData($ice_cream, $rules);
+                if($validation_response === true){
+                    $id = $ice_cream['ice_cream_id'];
+                    unset($ice_cream['ice_cream_id']);
+    
+                    $this->ice_cream_model->updateModel($ice_cream, $id);
+                }
+                else {
+                    $isError = true;
+                    array_push($this->errors, $validation_response);
+                }
             }
         }
+        else{
+            $isEmpty = true;
+        }
+
         if ($isError){
             $message = "";
             foreach ($this->errors as $key => $error){
@@ -148,6 +173,18 @@ class IceCreamController extends BaseController
             $response_data = array(
                 "code" => HttpCodes::STATUS_BAD_REQUEST,
                 "message" => $message,
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
+        else if ($isEmpty){
+
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => 'The body of the request is invalid',
             );
             return $this->prepareOkResponse(
                 $response,
