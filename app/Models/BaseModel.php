@@ -4,7 +4,9 @@ namespace Vanier\Api\Models;
 
 use PDO;
 use Exception;
+use PDOException;
 use Vanier\Api\Helpers\PaginationHelper;
+use Slim\Exception\HttpBadRequestException;
 
 /**
  * A wrapper class for the PDO MySQL API.
@@ -109,9 +111,23 @@ class BaseModel
         if (empty($args)) {
             return $this->db->query($sql);
         }
+        $stmt = null;
+        try{
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($args);
+        } catch(PDOException $e){
+            // $response_data = array(
+            //     "code" => HttpCodes::STATUS_BAD_REQUEST,
+            //     "message" => "Product already exists, please check the ID"//$message,
+            // );
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($args);
+        //     $stmt = array("code"=> HttpCodes::STATUS_BAD_REQUEST,
+        //     "message" => "There was trouble retrieving the data... Please check your input and try again."
+        
+        // );
+            echo $stmt;
+            
+        }
 
         return $stmt;
     }

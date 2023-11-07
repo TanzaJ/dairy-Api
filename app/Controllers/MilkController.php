@@ -105,7 +105,7 @@ class MilkController extends BaseController
 
             $response_data = array(
                 "code" => HttpCodes::STATUS_BAD_REQUEST,
-                "message" => $message,
+                "message" => "Product already exists, please check the ID"//$message,
             );
             return $this->prepareOkResponse(
                 $response,
