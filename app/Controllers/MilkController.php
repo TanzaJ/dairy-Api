@@ -158,49 +158,53 @@ class MilkController extends BaseController
 
         $isError = false;
 
-        //Parse request body
         $milks = $request->getParsedBody();
-
-        //Checks if empty
-        if(empty($milks) || isset($milk))
-        {
-            throw new HttpMissingDataException($request,
-            "Couldn't update milks/process the request due to missing data.");
+    
+        if (empty($milks)) {
+            throw new HttpMissingDataException(
+                $request,
+                "Couldn't update milks/process the request due to missing data."
+            );
         }
-
-        foreach ($milks as $key => $milk){
+    
+        foreach ($milks as $milk) {
             $validation_response = $this->isValidData($milk, $rules);
-            if($validation_response === true){
+    
+            if ($validation_response === true) {
                 $id = $milk['milk_id'];
                 unset($milk['milk_id']);
-                $this->milk_model->updateModel($milk, $id);
-            }
-            else {
+    
+                try {
+                    $this->milk_model->updateModel($milk, $id);
+                } catch (\Exception $e) {
+                    $isError = true;
+                    array_push($this->errors, $e->getMessage());
+                }
+            } else {
                 $isError = true;
                 array_push($this->errors, $validation_response);
             }
         }
-        if ($isError){
-            $message = "";
-            foreach ($this->errors as $key => $error){
-                $message .= $error . "---";
-            }
-
-            $response_data = array(
+    
+        if ($isError) {
+            $message = implode('---', $this->errors);
+    
+            $response_data = [
                 "code" => HttpCodes::STATUS_BAD_REQUEST,
                 "message" => $message,
-            );
+            ];
+    
             return $this->prepareOkResponse(
                 $response,
                 $response_data,
                 HttpCodes::STATUS_BAD_REQUEST
             );
-        }
-        else{
-            $response_data = array(
+        } else {
+            $response_data = [
                 "code" => HttpCodes::STATUS_CREATED,
                 "message" => "The list of Milks has been successfully updated",
-            );
+            ];
+    
             return $this->prepareOkResponse(
                 $response,
                 $response_data,
