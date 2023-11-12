@@ -74,8 +74,8 @@ class MilkModel extends BaseModel
 
     public function deleteMilk(int $id)
     {
-        // return $this->delete($this->table_name, (array) $id);
         $where = ['milk_id' => $id]; 
         return $this->delete($this->table_name, $where);
     }
+    
 }

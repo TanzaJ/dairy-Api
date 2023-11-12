@@ -289,27 +289,33 @@ class BaseModel
      */
     protected function delete($table, $where, $limit = 1)
     {
-        //collect the values from collection
+        // Collect the values from the collection
         $values = array_values($where);
-
-        //setup where 
+    
         $whereDetails = null;
         $i = 0;
         foreach ($where as $key => $value) {
             $whereDetails .= $i == 0 ? "$key = ?" : " AND $key = ?";
             $i++;
         }
-
-        //if limit is a number use a limit on the query
+    
         if (is_numeric($limit)) {
             $limit = "LIMIT $limit";
         }
-
+    
+        // Execute the DELETE query
         $stmt = $this->run("DELETE FROM $table WHERE $whereDetails $limit", $values);
-
-        return $stmt->rowCount();
+    
+        // Check if any rows were affected
+        $rowCount = $stmt->rowCount();
+    
+        if ($rowCount > 0) {
+            return $rowCount;
+        } else {
+            // No rows were affected, consider it as an error
+            throw new Exception("No records found for deletion.");
+        }
     }
-
     /**
      * Delete all records records
      * 
