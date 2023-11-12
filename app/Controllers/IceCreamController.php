@@ -126,6 +126,9 @@ class IceCreamController extends BaseController
     {
         $ice_creams = $request->getParsedBody();
         $rules = array(
+            'ice_cream_id' => array(
+                'required', 'integer'
+            ),
             'milk_id' => array(
                 'required', 'integer'
             ),
@@ -143,16 +146,11 @@ class IceCreamController extends BaseController
             )
         );
         $isError = false;
-        $isEmpty = false;
-        
         if ($ice_creams != null && $ice_creams != '') {
             foreach ($ice_creams as $key => $ice_cream){
                 $validation_response = $this->isValidData($ice_cream, $rules);
                 if($validation_response === true){
-                    $id = $ice_cream['ice_cream_id'];
-                    unset($ice_cream['ice_cream_id']);
-    
-                    $this->ice_cream_model->updateModel($ice_cream, $id);
+                    $this->ice_cream_model->updateIceCream($ice_cream);
                 }
                 else {
                     $isError = true;

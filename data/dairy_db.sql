@@ -925,7 +925,7 @@ ALTER TABLE `brand`
 -- Indexes for table `butter`
 --
 ALTER TABLE `butter`
-  ADD PRIMARY KEY (`butter_id`,`milk_id`),
+  ADD PRIMARY KEY (`butter_id`),
   ADD KEY `milk_id` (`milk_id`),
   ADD KEY `country_id` (`country_id`),
   ADD KEY `brand_id` (`brand_id`),
@@ -935,7 +935,7 @@ ALTER TABLE `butter`
 -- Indexes for table `cheese`
 --
 ALTER TABLE `cheese`
-  ADD PRIMARY KEY (`cheese_id`,`milk_id`),
+  ADD PRIMARY KEY (`cheese_id`),
   ADD KEY `milk_id` (`milk_id`),
   ADD KEY `country_id` (`country_id`),
   ADD KEY `brand_id` (`brand_id`),
@@ -951,7 +951,7 @@ ALTER TABLE `country`
 -- Indexes for table `ice_cream`
 --
 ALTER TABLE `ice_cream`
-  ADD PRIMARY KEY (`ice_cream_id`,`milk_id`),
+  ADD PRIMARY KEY (`ice_cream_id`),
   ADD KEY `milk_id` (`milk_id`),
   ADD KEY `country_id` (`country_id`),
   ADD KEY `brand_id` (`brand_id`),
@@ -989,6 +989,11 @@ ALTER TABLE `unit_type`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `ice_cream`
+--
+ALTER TABLE `ice_cream`
+  MODIFY `ice_cream_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `brand`
 --

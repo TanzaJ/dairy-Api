@@ -43,9 +43,11 @@ class IceCreamModel extends BaseModel
         return $this->insert($this->table_name, $new_entries);
     }
 
-    public function updateModel(array $new_ice_cream_modify, int $id)
+    public function updateIceCream(array $new_ice_cream_modify)
     {
-        return $this->update($this->table_name, $new_ice_cream_modify, (array) $id);
+        $where = ['ice_cream_id' => $new_ice_cream_modify['ice_cream_id']];
+        unset($new_ice_cream_modify['ice_cream_id']);
+        return $this->update($this->table_name, $new_ice_cream_modify, $where);
     }
 
     public function deleteIceCream(int $id)
