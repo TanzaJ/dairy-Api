@@ -31,12 +31,12 @@ class CheeseModel extends BaseModel
         }
         if (isset($filters['country_name'])) {
             $sql .= " AND country.country_name LIKE CONCAT('%', :country_name, '%')";
-            $query_values[':country_name'] = $filters['country_name'];
+            $filter_values[':country_name'] = $filters['country_name'];
         }
 
         if (isset($filters['brand_name'])) {
             $sql .= " AND brand.brand_name LIKE CONCAT('%', :brand_name, '%')";
-            $query_values[':brand_name'] = $filters['brand_name'];
+            $filter_values[':brand_name'] = $filters['brand_name'];
         }
 
         return $this->paginate($sql, $filter_values);
