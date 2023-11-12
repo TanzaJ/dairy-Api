@@ -68,9 +68,9 @@ $app->get('/butter', [ButterController::class, 'handleGetButter']);
 //POST /butter
 $app->post('/butter', [ButterController::class, 'handleCreateButter']);
 //PUT /butter
-$app->put('/butter/{butter_id}', [ButterController::class, 'handleUpdateButter']);
+$app->put('/butter', [ButterController::class, 'handleUpdateButter']);
 //DELETE /butter
-$app->delete('/butter/{butter_id}', [ButterController::class, 'handleDeleteButter']);
+$app->delete('/butter', [ButterController::class, 'handleDeleteButter']);
 
 
 // GET /brand

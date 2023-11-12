@@ -122,23 +122,20 @@ class ButterController extends BaseController
     public function validateButter(array $butter) 
     {
         $rules = array(
-            'butter_id' => array(
-                'required', 'int'
-            ),
             'milk_id' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'product_name' => array(
                 'required'
             ),
             'country_id' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'brand_id' => array(
-                'required', 'int'
+                'required', 'integer'
             ),
             'nutritional_value_id' => array(
-                'required', 'int'
+                'required', 'integer'
             )
         );
 

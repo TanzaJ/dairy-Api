@@ -47,11 +47,11 @@ class ButterModel extends BaseModel
 
     public function updateModel(array $new_butter_modify, int $id)
     {
-        return $this->update($this->table_name, $new_butter_modify, (array) $id);
+        return $this->update($this->table_name, $new_butter_modify, ['butter_id'=> $id]);
     }
 
     public function deleteButter(int $id)
     {
-        return $this->delete($this->table_name, (array) $id);
+        return $this->delete($this->table_name, ['butter_id'=> $id]);
     }
 }
