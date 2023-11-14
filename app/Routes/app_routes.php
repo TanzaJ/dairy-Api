@@ -4,6 +4,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\AboutController;
+use Vanier\Api\Controllers\AccountsController;
 use Vanier\Api\Controllers\CheeseController;
 use Vanier\Api\Controllers\MilkController;
 use Vanier\Api\Controllers\UnitTypeController;
@@ -31,7 +32,10 @@ global $app;
 
 // GET /
 $app->get('/', [AboutController::class, 'handleAboutApi']); 
-
+// POST /account
+$app->post('/account', [AccountsController::class, 'handleCreateAccount']); 
+// POST /token
+$app->post('/token', [AccountsController::class, 'handleGenerateToken']); 
 
 // GET /milk
 $app->get('/milk', [MilkController::class, 'handleGetMilk']);
