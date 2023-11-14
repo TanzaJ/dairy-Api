@@ -7,6 +7,11 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Helpers\JWTManager;
 use Vanier\Api\Models\AccountsModel;
+use Slim\Exception\HttpBadRequestException;
+use Vanier\Api\Exceptions\HttpMissingDataException;
+use Vanier\Api\Helpers\Validator;
+
+
 
 /**
  * A controller class that handles requests for creating new account and 
@@ -17,10 +22,14 @@ use Vanier\Api\Models\AccountsModel;
 class AccountsController extends BaseController
 {
     private $accounts_model = null;
+    private $jwt_manager = null;
+    private array $errors = array();
+
 
     public function __construct()
     {
         $this->accounts_model = new AccountsModel();
+        $this->jwt_manager = new JWTManager();
     }
 
     /* {
@@ -62,11 +71,81 @@ class AccountsController extends BaseController
     public function handleGenerateToken(Request $request, Response $response, array $args)
     {
         $account_data = $request->getParsedBody();
+
+        $rules = array(
+            'email' => array(
+                'required', 'email'
+            ),
+            'password' => array(
+                'required'
+            ),
+        );
+
+        $isError = false;
+
+
         //var_dump($user_data);exit;
+        // var_dump($account_data);
 
         //-- 1) Reject the request if the request body is empty.
+         //Parse request body
 
+         //Checks if empty
+         if(!isset($account_data))
+         {
+             throw new HttpMissingDataException($request,
+             "Couldn't generate token due to invalid or missing data.");
+         }
         //-- 2) Retrieve and validate the account credentials.
+        $validation_response = $this->isValidData($account_data, $rules);
+        if($validation_response === true){
+            // $this->accounts_model->addT($data);
+
+            if($this->accounts_model->isAccountExist($account_data["email"])){
+                if($this->accounts_model->isPasswordValid($account_data["email"],$account_data["password"])){
+                    $expires_in = time() + 60;
+                    $response_data = array(
+                        "code" => HttpCodes::STATUS_ACCEPTED,
+                        "message" => $this->jwt_manager->generateJWT($account_data, $expires_in)
+                    );
+                    return $this->prepareOkResponse(
+                        $response,
+                        $response_data,
+                        HttpCodes::STATUS_ACCEPTED
+                    );
+                }
+                else{
+                    $isError = true;
+                    array_push($this->errors, "The password is incorrect :AdinDocumentation:");                    
+                }
+            }
+            else{
+                $isError = true;
+                array_push($this->errors, "The account with the associated email is not there :pejmanSad:");
+            }
+        }
+        else {
+            $isError = true;
+            array_push($this->errors, $validation_response);
+        }
+
+
+        if ($isError){
+            $message = "";
+            foreach ($this->errors as $key => $error){
+                $message .= $error . "---";
+            }
+
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_REQUEST,
+                "message" => $message,
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_REQUEST
+            );
+        }
 
         //-- 3) Is there an account matching the provided email address in the DB?
 
@@ -85,7 +164,7 @@ class AccountsController extends BaseController
         //-- 5.a): Prepare the private claims: user_id, email, and role.
 
         // Current time stamp * 60 seconds        
-        $expires_in = time() + 60; //! NOTE: Expires in 1 minute.
+ //! NOTE: Expires in 1 minute.
         //!note: the time() function returns the current timestamp, which is the number of seconds since January 1st, 1970
         //-- 5.b) Create a JWT using the JWTManager's generateJWT() method.
         //$jwt = JWTManager::generateJWT($account_data, $expires_in);
