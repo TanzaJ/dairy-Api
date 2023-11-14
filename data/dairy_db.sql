@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2023 at 04:53 AM
+-- Generation Time: Nov 14, 2023 at 06:54 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -11,10 +11,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
--- besAirbnb db creation
-DROP SCHEMA IF EXISTS dairy_db;
-CREATE SCHEMA dairy_db;
-USE dairy_db;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -910,6 +907,36 @@ CREATE TABLE `unit_type` (
 INSERT INTO `unit_type` (`unit_id`, `unit_name`, `unit_scale`) VALUES
 (1, 'Kiloliters', 1000);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ws_log`
+--
+
+CREATE TABLE `ws_log` (
+  `log_id` int(10) UNSIGNED NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `user_action` varchar(255) NOT NULL,
+  `logged_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `user_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ws_users`
+--
+
+CREATE TABLE `ws_users` (
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` varchar(10) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -925,7 +952,7 @@ ALTER TABLE `brand`
 -- Indexes for table `butter`
 --
 ALTER TABLE `butter`
-  ADD PRIMARY KEY (`butter_id`),
+  ADD PRIMARY KEY (`butter_id`,`milk_id`),
   ADD KEY `milk_id` (`milk_id`),
   ADD KEY `country_id` (`country_id`),
   ADD KEY `brand_id` (`brand_id`),
@@ -935,7 +962,7 @@ ALTER TABLE `butter`
 -- Indexes for table `cheese`
 --
 ALTER TABLE `cheese`
-  ADD PRIMARY KEY (`cheese_id`),
+  ADD PRIMARY KEY (`cheese_id`,`milk_id`),
   ADD KEY `milk_id` (`milk_id`),
   ADD KEY `country_id` (`country_id`),
   ADD KEY `brand_id` (`brand_id`),
@@ -951,7 +978,7 @@ ALTER TABLE `country`
 -- Indexes for table `ice_cream`
 --
 ALTER TABLE `ice_cream`
-  ADD PRIMARY KEY (`ice_cream_id`),
+  ADD PRIMARY KEY (`ice_cream_id`,`milk_id`),
   ADD KEY `milk_id` (`milk_id`),
   ADD KEY `country_id` (`country_id`),
   ADD KEY `brand_id` (`brand_id`),
@@ -977,7 +1004,8 @@ ALTER TABLE `nutritional_value`
 --
 ALTER TABLE `projected_milk_production`
   ADD PRIMARY KEY (`pmp_id`),
-  ADD KEY `milk_id` (`milk_id`);
+  ADD KEY `milk_id` (`milk_id`),
+  ADD KEY `projected_milk_production_ibfk_2` (`unit_id`);
 
 --
 -- Indexes for table `unit_type`
@@ -986,19 +1014,27 @@ ALTER TABLE `unit_type`
   ADD PRIMARY KEY (`unit_id`);
 
 --
+-- Indexes for table `ws_log`
+--
+ALTER TABLE `ws_log`
+  ADD PRIMARY KEY (`log_id`);
+
+--
+-- Indexes for table `ws_users`
+--
+ALTER TABLE `ws_users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `ice_cream`
---
-ALTER TABLE `ice_cream`
-  MODIFY `ice_cream_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
---
 -- AUTO_INCREMENT for table `brand`
 --
 ALTER TABLE `brand`
-  MODIFY `brand_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `brand_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `butter`
@@ -1035,6 +1071,18 @@ ALTER TABLE `projected_milk_production`
 --
 ALTER TABLE `unit_type`
   MODIFY `unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `ws_log`
+--
+ALTER TABLE `ws_log`
+  MODIFY `log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ws_users`
+--
+ALTER TABLE `ws_users`
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
