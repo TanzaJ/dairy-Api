@@ -1,12 +1,19 @@
-<?php
+<?php declare(strict_types=1);
 use Slim\Factory\AppFactory;
 use Vanier\Api\Middleware\ContentNegotiationMiddleware;
+use Vanier\Api\Middleware\JWTAuthMiddleware;
+
+define('APP_BASE_DIR',  __DIR__);
+// TODO: This file must be added to your .gitignore file. 
+define('APP_ENV_FILE', 'config.env');
+define('APP_JWT_TOKEN_KEY', 'APP_JWT_TOKEN');
 
 require __DIR__ . '/vendor/autoload.php';
 
  // Include the file that contains the application's global configuration settings,
  // database credentials, etc.
 require_once __DIR__ .'/app/Config/app_config.php';
+
 
 //--Step 1) Instantiate a Slim app.s
 $app = AppFactory::create();
