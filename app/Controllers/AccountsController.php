@@ -22,25 +22,41 @@ class AccountsController extends BaseController
     {
         $this->accounts_model = new AccountsModel();
     }
+
+    /* {
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "johndoe@gmail.com",
+        "password": "JohnDoe123",
+        "role": "admin"
+    } */
     public function handleCreateAccount(Request $request, Response $response)
     {
         $account_data = $request->getParsedBody();
-        // 1) Verify if any information about the new account to be created was included in the 
-        // request.
         if (empty($account_data)) {
             return $this->prepareOkResponse($response, ['error' => true, 'message' => 'No data was provided in the request.'], 400);
         }
         //TODO: before creating the account, verify if there is already an existing one with the provided email.
-        // 2) Data was provided, we attempt to create an account for the user.                
-
-        
-        //if (!$new_account_id) {
-            // 2.a) Failed to create the new account.
-        //}
+        // 2) Data was provided, we attempt to create an account for the user.           
+        $new_account_id = null;
+        if ($this->accounts_model->isAccountExist($account_data["email"]) == false) {
+            $new_account_id = $this->accounts_model->createAccount($account_data);
+        }
+        // 2.1
+        if (!$new_account_id) {
+            return $this->prepareOkResponse($response, ['error' => true, 'message' => 'Account with that email is already in use.'], 409);
+        }
         
         // 3) A new account has been successfully created. 
-        // Prepare and return a response.  
-        return $response;
+        $response_data = array(
+            "code" => HttpCodes::STATUS_CREATED,
+            "message"=>"New account has been successfully created."
+        );
+        return $this->prepareOkResponse(
+            $response,
+            $response_data,
+            HttpCodes::STATUS_CREATED
+        );
     }
 
     public function handleGenerateToken(Request $request, Response $response, array $args)

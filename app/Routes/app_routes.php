@@ -32,6 +32,7 @@ global $app;
 
 // GET /
 $app->get('/', [AboutController::class, 'handleAboutApi']); 
+
 // POST /account
 $app->post('/account', [AccountsController::class, 'handleCreateAccount']); 
 // POST /token

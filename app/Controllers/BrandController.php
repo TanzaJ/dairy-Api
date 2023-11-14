@@ -62,7 +62,7 @@ class BrandController extends BaseController
         $response_data = array(
             "code" => HttpCodes::STATUS_CREATED,
             "message"=>"The provided list of brand entries have been successfully created!"
-    );
+        );
         return $this->prepareOkResponse(
             $response,
             $response_data,
