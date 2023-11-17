@@ -102,13 +102,14 @@ class AccountsController extends BaseController
         $validation_response = $this->isValidData($account_data, $rules);
         if($validation_response === true){
             // $this->accounts_model->addT($data);
-
             if($this->accounts_model->isAccountExist($account_data["email"])){
                 if($this->accounts_model->isPasswordValid($account_data["email"],$account_data["password"])){
                     $expires_in = time() + 60;
+                    $token = $this->jwt_manager->generateJWT($account_data, $expires_in);
                     $response_data = array(
                         "code" => HttpCodes::STATUS_ACCEPTED,
-                        "message" => $this->jwt_manager->generateJWT($account_data, $expires_in)
+                        "token" => $token,
+                        "message" => "Token generated successfully "
                     );
                     return $this->prepareOkResponse(
                         $response,
@@ -118,12 +119,12 @@ class AccountsController extends BaseController
                 }
                 else{
                     $isError = true;
-                    array_push($this->errors, "The password is incorrect :AdinDocumentation:");                    
+                    array_push($this->errors, "The password is incorrect");                    
                 }
             }
             else{
                 $isError = true;
-                array_push($this->errors, "The account with the associated email is not there :pejmanSad:");
+                array_push($this->errors, "The account with the associated email is not there");
             }
         }
         else {
