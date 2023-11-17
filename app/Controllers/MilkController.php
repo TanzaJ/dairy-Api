@@ -19,9 +19,13 @@ class MilkController extends BaseController
 
     private array $errors = array();
     private $milk_model =null;
+    private $log;
+
 
     public function __construct() {
         $this->milk_model = new MilkModel();
+        $this->log = new Logger('milk');
+        $this->log->pushHandler(new StreamHandler('dairy.log', Logger::DEBUG));
     }
 
     public function handleGetMilk(Request $request, Response $response, array $uri_args)
@@ -40,6 +44,7 @@ class MilkController extends BaseController
 
         $filters = $request->getQueryParams();
         $milk = $this->milk_model->getAll($filters);
+        $this->log->info('Get Request for MILK received with following filters:', $filters);
         return $this->prepareOkResponse($response,(array) $milk);
     }
 
