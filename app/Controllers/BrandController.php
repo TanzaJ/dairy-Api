@@ -11,6 +11,8 @@ use Vanier\Api\Exceptions\HttpMissingDataException;
 use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\Validator;
 use Vanier\Api\Models\BrandModel;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class BrandController extends BaseController
 {

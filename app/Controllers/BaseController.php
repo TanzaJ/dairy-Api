@@ -6,6 +6,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\Validator;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 
 class BaseController

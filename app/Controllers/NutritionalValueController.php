@@ -11,6 +11,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Helpers\Input;
 use Slim\Exception\HttpBadRequestException;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class NutritionalValueController extends BaseController
 {

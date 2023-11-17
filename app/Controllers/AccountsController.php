@@ -10,6 +10,8 @@ use Vanier\Api\Models\AccountsModel;
 use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Exceptions\HttpMissingDataException;
 use Vanier\Api\Helpers\Validator;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 
 

@@ -10,6 +10,8 @@ use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\Validator;
 use Vanier\Api\Models\IceCreamModel;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 
 class IceCreamController extends BaseController

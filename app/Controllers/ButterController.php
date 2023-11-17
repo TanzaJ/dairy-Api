@@ -10,6 +10,8 @@ use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\Validator;
 use Vanier\Api\Models\ButterModel;
 use Slim\Exception\HttpBadRequestException;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 
 class ButterController extends BaseController

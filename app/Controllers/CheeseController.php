@@ -11,6 +11,8 @@ use Vanier\Api\Exceptions\HttpMissingDataException;
 use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\Validator;
 use Vanier\Api\Models\CheeseModel;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class CheeseController extends BaseController
 {
