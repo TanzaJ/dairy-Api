@@ -2,6 +2,7 @@
 use Slim\Factory\AppFactory;
 use Vanier\Api\Middleware\ContentNegotiationMiddleware;
 use Vanier\Api\Middleware\JWTAuthMiddleware;
+use Vanier\Api\Middleware\AppLoggingMiddleware;
 
 define('APP_BASE_DIR',  __DIR__);
 // TODO: This file must be added to your .gitignore file. 
@@ -18,11 +19,12 @@ require_once __DIR__ .'/app/Config/app_config.php';
 //--Step 1) Instantiate a Slim app.s
 $app = AppFactory::create();
 
-$app->addMiddleware(new ContentNegotiationMiddleware());
 
 $app->addBodyParsingMiddleware();
-
 $app->addRoutingMiddleware();
+$app->addMiddleware(new ContentNegotiationMiddleware());
+$app->addMiddleware(new AppLoggingMiddleware());
+$app->addBodyParsingMiddleware();
 // NOTE: the error handling middleware MUST be added last.
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $errorMiddleware->getDefaultErrorHandler()->forceContentType(APP_MEDIA_TYPE_JSON);

@@ -14,6 +14,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 
+
 class MilkController extends BaseController
 {
 
@@ -24,8 +25,7 @@ class MilkController extends BaseController
 
     public function __construct() {
         $this->milk_model = new MilkModel();
-        $this->log = new Logger('milk');
-        $this->log->pushHandler(new StreamHandler('dairy.log', Logger::DEBUG));
+ 
     }
 
     public function handleGetMilk(Request $request, Response $response, array $uri_args)
