@@ -25,11 +25,17 @@ class AppLoggingMiddleware implements MiddlewareInterface
     
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $invoked_controller =$request->getUri();
+
+        $filters = $request->getQueryParams();
         $this->logger = new Logger('access_logs');
         $this->logger->setTimezone(new DateTimeZone('America/Toronto'));
         $this->log_handler = new StreamHandler('access.log', Logger::DEBUG);
         $this->logger->pushHandler($this->log_handler);
-        $this->logger->info('UwU');
+        $this->logger->info('User Logged in w/ IP of '.$ip);
+        $this->logger->info('User Invoked '.$invoked_controller, $filters);
+
         return $handler->handle($request);
     }
 }
