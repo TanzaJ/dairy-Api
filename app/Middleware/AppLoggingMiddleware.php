@@ -26,16 +26,45 @@ class AppLoggingMiddleware implements MiddlewareInterface
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
         $ip = $_SERVER['REMOTE_ADDR'];
-        $invoked_controller =$request->getUri();
+        $uri = $request->getUri();
+        
+        // Extract the controller name from the URI path
+        $path = $uri->getPath();
+        $controllerName = $this->extractResourceName($path);
+        $controllerName = ucfirst($controllerName);
+
+        $method = $request->getMethod();
+        $actionName = $this->mapMethodToAction($method);
 
         $filters = $request->getQueryParams();
         $this->logger = new Logger('access_logs');
         $this->logger->setTimezone(new DateTimeZone('America/Toronto'));
         $this->log_handler = new StreamHandler('access.log', Logger::DEBUG);
         $this->logger->pushHandler($this->log_handler);
-        $this->logger->info('User Logged in w/ IP of '.$ip);
-        $this->logger->info('User Invoked '.$invoked_controller, $filters);
+        $this->logger->info('User Logged in w/ IP of ' . $ip);
+        
+        $this->logger->info("User Invoked $actionName on $controllerName", $filters);
 
         return $handler->handle($request);
+    }
+
+    private function mapMethodToAction(string $method): string
+    {
+        $methodActions = [
+            'GET' => 'Retrieve',
+            'POST' => 'Create',
+            'PUT' => 'Update',
+            'DELETE' => 'Delete',
+        ];
+        return $methodActions[strtoupper($method)] ?? $method;
+    }
+    
+    private function extractResourceName(string $path): string
+    {
+        // Assuming the controller name is the first segment after the base path
+        $basePath = '/dairy-api/';
+        $pathWithoutBase = str_replace($basePath, '', $path);
+        $segments = explode('/', trim($pathWithoutBase, '/'));
+        return $segments[0] ?? 'UnknownResource';
     }
 }
