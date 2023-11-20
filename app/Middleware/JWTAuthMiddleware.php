@@ -15,7 +15,6 @@ use Vanier\Api\Helpers\JWTManager;
 
 class JWTAuthMiddleware implements MiddlewareInterface
 {
-
     public function __construct(array $options = [])
     {
     }
@@ -25,7 +24,10 @@ class JWTAuthMiddleware implements MiddlewareInterface
               We need to ignore the routes that enables client applications
               to create account and request a JWT token.
         */
-        
+        $uri = $request->getUri();
+        if ($uri){
+
+        }
         // 1.a) If the request's uri contains /account or /token, handle the request:
         //return $handler->handle($request);
 
