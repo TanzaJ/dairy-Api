@@ -40,6 +40,23 @@ class NutritionalValueController extends BaseController
         return $this->prepareOkResponse($response,(array) $nv_info);
     }
 
+    public function handleGetNVById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $nv_id = $uri_args['nv_id'];
+        if (!Input::isInt($nv_id)) {
+            //throw exception
+        }
+        if($nv_id < 0) {
+            //throw exception
+        }
+
+
+
+        $nv = $this->nv_model->getNVById($uri_args['nv_id']);
+        return $this->prepareOkResponse($response,(array) $nv);
+    }
+
     public function handleCreateNV(Request $request, Response $response)
     {
         $rules = array(

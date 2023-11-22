@@ -41,6 +41,23 @@ class CheeseController extends BaseController
         return $this->prepareOkResponse($response,(array) $cheese_info);
     }
 
+    public function handleGetCheeseById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $cheese_id = $uri_args['cheese_id'];
+        if (!Input::isInt($cheese_id)) {
+            //throw exception
+        }
+        if($cheese_id < 0) {
+            //throw exception
+        }
+
+
+
+        $cheese = $this->cheese_model->getCheeseById($uri_args['cheese_id']);
+        return $this->prepareOkResponse($response,(array) $cheese);
+    }
+
     public function handleCreateCheese(Request $request, Response $response)
     {
         $cheeses = $request->getParsedBody();

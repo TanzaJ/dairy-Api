@@ -40,6 +40,23 @@ class CountryController extends BaseController
         return $this->prepareOkResponse($response,(array) $country_info);
     }
 
+    public function handleGetCountryById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $country_id = $uri_args['country_id'];
+        if (!Input::isInt($country_id)) {
+            //throw exception
+        }
+        if($country_id < 0) {
+            //throw exception
+        }
+
+
+
+        $country = $this->country_model->getCountryById($uri_args['country_id']);
+        return $this->prepareOkResponse($response,(array) $country);
+    }
+
     public function handleCreateCountry(Request $request, Response $response)
     {
         $countries = $request->getParsedBody();

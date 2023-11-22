@@ -48,6 +48,23 @@ class MilkController extends BaseController
         return $this->prepareOkResponse($response,(array) $milk);
     }
 
+    public function handleGetMilkById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $milk_id = $uri_args['milk_id'];
+        if (!Input::isInt($milk_id)) {
+            //throw exception
+        }
+        if($milk_id < 0) {
+            //throw exception
+        }
+
+
+
+        $milk = $this->milk_model->getMilkById($uri_args['milk_id']);
+        return $this->prepareOkResponse($response,(array) $milk);
+    }
+
     public function handleCreateMilk(Request $request, Response $response)
     {
         //Rules

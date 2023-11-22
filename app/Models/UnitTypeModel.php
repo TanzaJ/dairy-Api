@@ -27,6 +27,13 @@ class UnitTypeModel extends BaseModel
 
         return $this->paginate($sql, $filter_values);
     }
+
+    public function getUnitTypeById(int $unit_id)
+    {
+        $sql = "SELECT * FROM $this->table_name WHERE unit_id = :unit_id";
+        return $this->fetchSingle($sql, [':unit_id' => $unit_id]);
+    }
+
     public function addUnitType(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);

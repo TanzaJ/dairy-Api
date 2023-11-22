@@ -57,6 +57,18 @@ class MilkModel extends BaseModel
 
         return $this->paginate($sql, $filter_values);
     }
+
+    /**
+     * Gets milk by their id
+     * 
+     * @param  int $milk_id the id of the entry the client is fetching
+     */
+    public function getMilkById(int $milk_id)
+    {
+        $sql = "SELECT * FROM $this->table_name WHERE milk_id = :milk_id";
+        return $this->fetchSingle($sql, [':milk_id' => $milk_id]);
+    }
+
     public function addMilk(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);

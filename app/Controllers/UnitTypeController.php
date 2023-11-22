@@ -39,6 +39,23 @@ class UnitTypeController extends BaseController
         $unit_type_info = $this->unit_type_model->getAll($filters);
         return $this->prepareOkResponse($response,(array) $unit_type_info);
     }
+
+    public function handleGetUnitTypeById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $unit_id = $uri_args['unit_id'];
+        if (!Input::isInt($unit_id)) {
+            //throw exception
+        }
+        if($unit_id < 0) {
+            //throw exception
+        }
+
+
+
+        $unit = $this->unit_model->getUnitTypeById($uri_args['unit_id']);
+        return $this->prepareOkResponse($response,(array) $unit);
+    }
     
     public function handleCreateUnitType(Request $request, Response $response)
     {

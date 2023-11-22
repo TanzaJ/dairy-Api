@@ -34,6 +34,13 @@ class BrandModel extends BaseModel
 
         return $this->paginate($sql, $query_values);
     }
+
+    public function getBrandById(int $brand_id)
+    {
+        $sql = "SELECT * FROM $this->table_name WHERE brand_id = :brand_id";
+        return $this->fetchSingle($sql, [':brand_id' => $brand_id]);
+    }
+
     public function addBrand(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);

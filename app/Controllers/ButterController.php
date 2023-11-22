@@ -42,6 +42,23 @@ class ButterController extends BaseController
         return $this->prepareOkResponse($response,(array) $butter_info);
     }
 
+    public function handleGetButterById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $butter_id = $uri_args['butter_id'];
+        if (!Input::isInt($butter_id)) {
+            //throw exception
+        }
+        if($butter_id < 0) {
+            //throw exception
+        }
+
+
+
+        $butter = $this->butter_model->getButterById($uri_args['butter_id']);
+        return $this->prepareOkResponse($response,(array) $butter);
+    }
+
     public function handleCreateButter(Request $request, Response $response)
     {
         $butters = $request->getParsedBody();

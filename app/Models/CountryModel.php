@@ -47,6 +47,13 @@ class CountryModel extends BaseModel
         
         return $this->paginate($sql, $filter_values);
     }
+
+    public function getCountryById(int $country_id)
+    {
+        $sql = "SELECT * FROM $this->table_name WHERE country_id = :country_id";
+        return $this->fetchSingle($sql, [':country_id' => $country_id]);
+    }
+
     public function addCountry(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);

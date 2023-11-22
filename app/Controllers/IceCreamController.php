@@ -42,6 +42,23 @@ class IceCreamController extends BaseController
         return $this->prepareOkResponse($response,(array) $ice_cream_info);
     }
 
+    public function handleGetIceCreamById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $ice_cream_id = $uri_args['ice_cream_id'];
+        if (!Input::isInt($ice_cream_id)) {
+            //throw exception
+        }
+        if($ice_cream_id < 0) {
+            //throw exception
+        }
+
+
+
+        $ice_cream = $this->ice_cream_model->getIceCreamById($uri_args['ice_cream_id']);
+        return $this->prepareOkResponse($response,(array) $ice_cream);
+    }
+
     public function handleCreateIceCream(Request $request, Response $response)
     {
          $rules = array(

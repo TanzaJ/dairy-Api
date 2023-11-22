@@ -41,6 +41,23 @@ class BrandController extends BaseController
         return $this->prepareOkResponse($response,(array) $brand_info);
     }
 
+    public function handleGetBrandById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $brand_id = $uri_args['brand_id'];
+        if (!Input::isInt($brand_id)) {
+            //throw exception
+        }
+        if($brand_id < 0) {
+            //throw exception
+        }
+
+
+
+        $brand = $this->brand_model->getBrandById($uri_args['brand_id']);
+        return $this->prepareOkResponse($response,(array) $brand);
+    }
+
     /* [
         {
           "brand_id": 52,
