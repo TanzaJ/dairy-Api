@@ -11,16 +11,14 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-USE master
-GO
-DROP DATABASE IF EXISTS 'dairy_db'
-GO
+DROP DATABASE IF EXISTS `dairy_db`;
+
 -- Creating the database
-CREATE DATABASE 'dairy_db'
-GO
+CREATE DATABASE IF NOT EXISTS `dairy_db`;
+
 -- Changing the connection.
-USE 'dairy_db'
-GO
+USE `dairy_db`;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
