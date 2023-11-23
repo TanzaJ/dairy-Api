@@ -43,17 +43,17 @@ class ProjMilkController extends BaseController
     public function handleGetProjMilkById(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
-        $proj_milk_id = $uri_args['proj_milk_id'];
-        if (!Input::isInt($proj_milk_id)) {
+        $pmp_id = $uri_args['pmp_id'];
+        if (!Input::isInt($pmp_id)) {
             //throw exception
         }
-        if($proj_milk_id < 0) {
+        if($pmp_id < 0) {
             //throw exception
         }
 
 
 
-        $proj_milk = $this->proj_milk_model->getProjMilkById($uri_args['proj_milk_id']);
+        $proj_milk = $this->proj_milk_model->getProjMilkById($uri_args['pmp_id']);
         return $this->prepareOkResponse($response,(array) $proj_milk);
     }
 

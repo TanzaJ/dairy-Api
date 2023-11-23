@@ -109,7 +109,7 @@ $app->get('/country/{country_id}', [CountryController::class, 'handleGetCountryB
 //GET /projectedMilkProduction
 $app->get('/projected_milk_production', [ProjMilkController::class, 'handleGetProjMilk']);
 // GET /projectedMilkProduction by id
-$app->get('/projected_milk_production/{proj_milk_id}', [ProjMilkController::class, 'handleGetProjMilkById']);
+$app->get('/projected_milk_production/{pmp_id}', [ProjMilkController::class, 'handleGetProjMilkById']);
 // //POST /country
 // $app->post('/projected_milk_production', [ProjMilkController::class, 'handleCreateProjMilk']);
 // //PUT /country
@@ -121,7 +121,7 @@ $app->get('/projected_milk_production/{proj_milk_id}', [ProjMilkController::clas
 //GET /nutritional_value
 $app->get('/nutritional_value', [NutritionalValueController::class, 'handleGetNV']);
 // GET /nutritional_value by id
-$app->get('/nutritional_value/{nv_id}', [NutritionalValueController::class, 'handleGetNVById']);
+$app->get('/nutritional_value/{nutritional_value_id}', [NutritionalValueController::class, 'handleGetNVById']);
 // //POST /country
 // $app->post('/nutritional_value', [NutritionalValueController::class, 'handleCreateNV']);
 // //PUT /country
