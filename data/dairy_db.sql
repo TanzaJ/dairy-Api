@@ -13,13 +13,13 @@ SET time_zone = "+00:00";
 
 USE master
 GO
-DROP DATABASE IF EXISTS dairy_db
+DROP DATABASE IF EXISTS 'dairy_db'
 GO
 -- Creating the database
-CREATE DATABASE dairy_db
+CREATE DATABASE 'dairy_db'
 GO
 -- Changing the connection.
-USE dairy_db
+USE 'dairy_db'
 GO
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
