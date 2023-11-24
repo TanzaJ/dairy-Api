@@ -26,6 +26,7 @@ class AccountsController extends BaseController
     private $accounts_model = null;
     private $jwt_manager = null;
     private array $errors = array();
+    private $expiry_time = 600;
 
 
     public function __construct()
@@ -104,7 +105,7 @@ class AccountsController extends BaseController
             // $this->accounts_model->addT($data);
             if($this->accounts_model->isAccountExist($account_data["email"])){
                 if($this->accounts_model->isPasswordValid($account_data["email"],$account_data["password"])){
-                    $expires_in = time() + 120;
+                    $expires_in = time() + $this->expiry_time;
                     $token = $this->jwt_manager->generateJWT($account_data, $expires_in);
                     $response_data = array(
                         "code" => HttpCodes::STATUS_ACCEPTED,

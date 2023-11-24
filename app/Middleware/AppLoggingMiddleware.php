@@ -28,6 +28,8 @@ class AppLoggingMiddleware implements MiddlewareInterface
         $ip = $_SERVER['REMOTE_ADDR'];
         $uri = $request->getUri();
         
+var_dump($request);
+
         // Extract the controller name from the URI path
         $path = $uri->getPath();
         $controllerName = $this->extractResourceName($path);
@@ -41,7 +43,7 @@ class AppLoggingMiddleware implements MiddlewareInterface
         $this->logger->setTimezone(new DateTimeZone('America/Toronto'));
         $this->log_handler = new StreamHandler('access.log', Logger::DEBUG);
         $this->logger->pushHandler($this->log_handler);
-        $this->logger->info('User Logged in w/ IP of ' . $ip);
+        $this->logger->alert('User Logged in w/ IP of ' . $ip);
         
         $this->logger->info("User Invoked $actionName on $controllerName", $filters);
 
@@ -61,7 +63,6 @@ class AppLoggingMiddleware implements MiddlewareInterface
     
     private function extractResourceName(string $path): string
     {
-        // Assuming the controller name is the first segment after the base path
         $basePath = '/dairy-api/';
         $pathWithoutBase = str_replace($basePath, '', $path);
         $segments = explode('/', trim($pathWithoutBase, '/'));

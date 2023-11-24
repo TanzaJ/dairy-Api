@@ -62,6 +62,14 @@ $app->delete('/cheese', [CheeseController::class, 'handleDeleteCheese']);
 // GET /cheese by id
 $app->get('/cheese/{cheese_id}', [CheeseController::class, 'handleGetCheeseById']);
 
+// GET /learn/cheese/random
+$app->get('/learn/cheese/random', [CompositeController::class, 'handleGetRandomCheese']);
+
+// GET /learn/cheese
+$app->get('/learn/cheese', [CompositeController::class, 'handleGetAllCheese']);
+
+
+
 //GET /ice_cream
 $app->get('/ice_cream', [IceCreamController::class, 'handleGetIceCream']);
 //POST /ice_cream
