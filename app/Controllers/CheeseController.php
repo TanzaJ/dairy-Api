@@ -14,6 +14,9 @@ use Vanier\Api\Models\CheeseModel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * A controller class that handles requests concerning cheese
+ */
 class CheeseController extends BaseController
 {
     private $cheese_model =null;
@@ -22,6 +25,13 @@ class CheeseController extends BaseController
         $this->cheese_model = new CheeseModel();
     }
 
+    /**
+     * Fetches a list of cheeses
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetCheese(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -41,6 +51,36 @@ class CheeseController extends BaseController
         return $this->prepareOkResponse($response,(array) $cheese_info);
     }
 
+    /**
+     * Fetches a list of cheeses based on the id provided
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
+    public function handleGetCheeseById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $cheese_id = $uri_args['cheese_id'];
+        if (!Input::isInt($cheese_id)) {
+            //throw exception
+        }
+        if($cheese_id < 0) {
+            //throw exception
+        }
+
+
+
+        $cheese = $this->cheese_model->getCheeseById($uri_args['cheese_id']);
+        return $this->prepareOkResponse($response,(array) $cheese);
+    }
+
+    /**
+     * Creates cheese entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     */
     public function handleCreateCheese(Request $request, Response $response)
     {
         $cheeses = $request->getParsedBody();
@@ -65,6 +105,13 @@ class CheeseController extends BaseController
         );
     }
 
+    /**
+     * Updates cheese entries based on the request body
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleUpdateCheese(Request $request, Response $response, array $uri_args)
     {
         $cheeses = $request->getParsedBody();
@@ -93,6 +140,13 @@ class CheeseController extends BaseController
 
     }
 
+    /**
+     * Deletes cheese entries based on the id provided
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleDeleteCheese(Request $request, Response $response, array $uri_args)
     {
         $cheeses = $request->getParsedBody(); 
@@ -118,6 +172,12 @@ class CheeseController extends BaseController
         HttpCodes::STATUS_ACCEPTED
     );
     }
+
+    /**
+     * Validates cheese entries
+     * 
+     * @param  array $cheese the entry to be validated
+     */
     public function validateCheese(array $cheese)
     {
         $rules = array(

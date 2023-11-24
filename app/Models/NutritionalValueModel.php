@@ -59,6 +59,13 @@ class NutritionalValueModel extends BaseModel
         
         return $this->paginate($sql, $filter_values);
     }
+
+    public function getNVById(int $nutritional_value_id)
+    {
+        $sql = "SELECT * FROM $this->table_name WHERE nutritional_value_id = :nutritional_value_id";
+        return $this->fetchSingle($sql, [':nutritional_value_id' => $nutritional_value_id]);
+    }
+
     public function addNV(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);

@@ -41,6 +41,12 @@ class ProjMilkModel extends BaseModel
 
         return $this->paginate($sql, $filter_values);
     }
+
+    public function getProjMilkById(int $pmp_id)
+    {
+        $sql = "SELECT * FROM $this->table_name WHERE pmp_id = :pmp_id";
+        return $this->fetchSingle($sql, [':pmp_id' => $pmp_id]);
+    }
     public function addProjMilk(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);

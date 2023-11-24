@@ -14,6 +14,9 @@ use Vanier\Api\Models\BrandModel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * A controller class that handles requests concerning brands
+ */
 class BrandController extends BaseController
 {
     private $brand_model =null;
@@ -22,6 +25,13 @@ class BrandController extends BaseController
         $this->brand_model = new BrandModel();
     }
 
+    /**
+     * Fetches a list of brands
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetBrand(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -41,6 +51,30 @@ class BrandController extends BaseController
         return $this->prepareOkResponse($response,(array) $brand_info);
     }
 
+    /**
+     * Fetches a list of brands based on the id entered
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
+    public function handleGetBrandById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $brand_id = $uri_args['brand_id'];
+        if (!Input::isInt($brand_id)) {
+            //throw exception
+        }
+        if($brand_id < 0) {
+            //throw exception
+        }
+
+
+
+        $brand = $this->brand_model->getBrandById($uri_args['brand_id']);
+        return $this->prepareOkResponse($response,(array) $brand);
+    }
+
     /* [
         {
           "brand_id": 52,
@@ -49,6 +83,12 @@ class BrandController extends BaseController
         }
     ] */
 
+    /**
+     * Creates brand entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     */
     public function handleCreateBrand(Request $request, Response $response)
     {
         $brands = $request->getParsedBody();
@@ -72,6 +112,13 @@ class BrandController extends BaseController
         );
     }
 
+    /**
+     * Updates brand entries based on the information in the request body
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleUpdateBrand(Request $request, Response $response, array $uri_args)
     {
         $brands = $request->getParsedBody();
@@ -99,6 +146,13 @@ class BrandController extends BaseController
         );
     }
 
+    /**
+     * Deletes brand entries based on the id provided
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleDeleteBrand(Request $request, Response $response, array $uri_args)
     {
         $brands = $request->getParsedBody(); 
@@ -125,6 +179,12 @@ class BrandController extends BaseController
         HttpCodes::STATUS_ACCEPTED
     );
     }
+
+    /**
+     * Validates brand entries
+     * 
+     * @param  array $brand the entry to be validated
+     */
     public function validateBrand(array $brand) {
         $rules = array(
             'brand_id ' => array(

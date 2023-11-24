@@ -39,6 +39,11 @@ class ButterModel extends BaseModel
         return $this->paginate($sql, $query_values);
     }
 
+    public function getButterById(int $butter_id)
+    {
+        $sql = "SELECT * FROM $this->table_name WHERE butter_id = :butter_id";
+        return $this->fetchSingle($sql, [':butter_id' => $butter_id]);
+    }
 
     public function addButter(array $new_entries)
     {

@@ -13,6 +13,9 @@ use Slim\Exception\HttpBadRequestException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * A controller class that handles requests concerning unit type
+ */
 class UnitTypeController extends BaseController
 {
     private $unit_type_model =null;
@@ -21,6 +24,13 @@ class UnitTypeController extends BaseController
         $this->unit_type_model = new UnitTypeModel();
     }
 
+    /**
+     * Fetches a list of unit type entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetUnitType(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -39,7 +49,37 @@ class UnitTypeController extends BaseController
         $unit_type_info = $this->unit_type_model->getAll($filters);
         return $this->prepareOkResponse($response,(array) $unit_type_info);
     }
+
+    /**
+     * Fetches a list of unit type entries based on id
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
+    public function handleGetUnitTypeById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $unit_id = $uri_args['unit_id'];
+        if (!Input::isInt($unit_id)) {
+            //throw exception
+        }
+        if($unit_id < 0) {
+            //throw exception
+        }
+
+
+
+        $unit = $this->unit_model->getUnitTypeById($uri_args['unit_id']);
+        return $this->prepareOkResponse($response,(array) $unit);
+    }
     
+    /**
+     * Creates unit type entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     */
     public function handleCreateUnitType(Request $request, Response $response)
     {
         $unitTypes = $request->getParsedBody();
@@ -64,6 +104,13 @@ class UnitTypeController extends BaseController
         );
     }
 
+    /**
+     * Updates unit type entries based on the request body
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleUpdateUnitType(Request $request, Response $response, array $uri_args)
     {
         $unitTypes = $request->getParsedBody();
@@ -93,6 +140,13 @@ class UnitTypeController extends BaseController
 
     }
 
+    /**
+     * Deletes unit type entries based on the id provided
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleDeleteUnitType(Request $request, Response $response, array $uri_args)
     {
         $unitTypes = $request->getParsedBody(); 
@@ -118,6 +172,12 @@ class UnitTypeController extends BaseController
         HttpCodes::STATUS_ACCEPTED
     );
     }
+
+    /**
+     * Validates unit type entries
+     * 
+     * @param  array $unitType the entry to be validated
+     */
     public function validateUnitType(array $unitType) {
         $rules = array(
             'unit_id ' => array(

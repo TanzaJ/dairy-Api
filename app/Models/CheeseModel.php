@@ -42,6 +42,12 @@ class CheeseModel extends BaseModel
         return $this->paginate($sql, $filter_values);
     }
 
+    public function getCheeseById(int $cheese_id)
+    {
+        $sql = "SELECT * FROM $this->table_name WHERE cheese_id = :cheese_id";
+        return $this->fetchSingle($sql, [':cheese_id' => $cheese_id]);
+    }
+
     public function addCheese(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);

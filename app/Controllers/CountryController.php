@@ -14,6 +14,9 @@ use Vanier\Api\Models\CountryModel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * A controller class that handles requests concerning countries
+ */
 class CountryController extends BaseController
 {
     private $country_model =null;
@@ -22,6 +25,13 @@ class CountryController extends BaseController
         $this->country_model = new CountryModel();
     }
 
+    /**
+     * Fetches a list of countries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetCountry(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -40,6 +50,36 @@ class CountryController extends BaseController
         return $this->prepareOkResponse($response,(array) $country_info);
     }
 
+    /**
+     * Fetches a list of countries based on the id provided
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
+    public function handleGetCountryById(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+        $country_id = $uri_args['country_id'];
+        if (!Input::isInt($country_id)) {
+            //throw exception
+        }
+        if($country_id < 0) {
+            //throw exception
+        }
+
+
+
+        $country = $this->country_model->getCountryById($uri_args['country_id']);
+        return $this->prepareOkResponse($response,(array) $country);
+    }
+
+    /**
+     * Creates country entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     */
     public function handleCreateCountry(Request $request, Response $response)
     {
         $countries = $request->getParsedBody();
@@ -64,6 +104,13 @@ class CountryController extends BaseController
         );
     }
 
+    /**
+     * Updates country entries based on the request body
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleUpdateCountry(Request $request, Response $response, array $uri_args)
     {
         $countries = $request->getParsedBody();
@@ -92,6 +139,13 @@ class CountryController extends BaseController
 
     }
 
+    /**
+     * Deletes country entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleDeleteCountry(Request $request, Response $response, array $uri_args)
     {
         $countries = $request->getParsedBody(); 
@@ -117,6 +171,12 @@ class CountryController extends BaseController
         HttpCodes::STATUS_ACCEPTED
     );
     }
+
+    /**
+     * Validates country entries
+     * 
+     * @param  array $country the entry to be validated
+     */
     public function validateCountry(array $country)
     {
         $rules = array(

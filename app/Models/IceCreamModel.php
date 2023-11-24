@@ -38,6 +38,12 @@ class IceCreamModel extends BaseModel
         return $this->paginate($sql, $query_values);
     }
 
+    public function getIceCreamById(int $ice_cream_id)
+    {
+        $sql = "SELECT * FROM $this->table_name WHERE ice_cream_id = :ice_cream_id";
+        return $this->fetchSingle($sql, [':ice_cream_id' => $ice_cream_id]);
+    }
+
     public function addIceCream(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);
