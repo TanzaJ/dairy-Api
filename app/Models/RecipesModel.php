@@ -11,7 +11,7 @@ class RecipesModel
         $ws_invoker = new WebServiceInvoker([]);
         $uri = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=52f98e558d7a4e0182e8352289235bdf";
 
-        if(isset($filters['ingredients']))
+        if(isset($filters['ingredients']) && strlen($filters['ingredients']) > 0)
         {
             $ingredients = explode(',', $filters['ingredients']);
             $uri .= "&ingredients=";
@@ -20,16 +20,17 @@ class RecipesModel
                 if ($ingredient !== array_key_last($ingredients)) {
                     $uri .= ",+";
                 }
-
             }
         }
-        if(isset($filters['recipesMaxNum']))
+        if(isset($filters['recipesMaxNum']) && $filters['recipesMaxNum'] > 0)
         {
-            $uri .= "&number=" + $filters['recipesMaxNum'];
+            $uri .= "&number=" . $filters['recipesMaxNum'];
         }
+
         $recipes = $ws_invoker->invokeUri($uri);
+
         if ($recipes != null){
-            foreach ($recipes->results as $key => $recipe) {
+            foreach ($recipes as $recipe) {
                 $finalRecipe = $this->getRecipeById($recipe->id);
 
                 if ($finalRecipe === null){
@@ -45,7 +46,7 @@ class RecipesModel
 
     public function getRecipeById($id){
         $ws_invoker = new WebServiceInvoker([]);
-        $uri = "https://api.spoonacular.com/recipes/"+ $id +"/information?apiKey=52f98e558d7a4e0182e8352289235bdf";
+        $uri = "https://api.spoonacular.com/recipes/" . $id . "/information?apiKey=52f98e558d7a4e0182e8352289235bdf";
         $recipe = $ws_invoker->invokeUri($uri);
 
         if($recipe === null){

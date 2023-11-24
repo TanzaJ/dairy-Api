@@ -2,6 +2,7 @@
 
 namespace Vanier\Api\Controllers;
 
+use Exception;
 use Fig\Http\Message\StatusCodeInterface as HttpCodes;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -12,6 +13,7 @@ use Vanier\Api\Helpers\WebServiceInvoker;
 use Slim\Exception\HttpBadRequestException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Vanier\Api\Models\RecipesModel;
 
 /**
  * A controller class that handles requests concerning composite resources
@@ -28,9 +30,26 @@ class CompositeController extends BaseController
      */
     public function handleGetRecipes(Request $request, Response $response, array $uri_args)
     {
-        $recipes = $this->fetchRecipes();
-
-        return $this->prepareOkResponse($response, (array) $recipes);
+        $filters = $request->getQueryParams();
+        $recipeModel = new RecipesModel();
+        $recipes = $recipeModel->fetchRecipes($filters);
+        try {
+            return $this->prepareOkResponse(
+                $response,
+                $recipes,
+                HttpCodes::STATUS_BAD_GATEWAY
+            );
+        } catch (Exception $e) {
+            $response_data = array(
+                "code" => HttpCodes::STATUS_BAD_GATEWAY,
+                "message" => "The Composite Api could not be included",
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_BAD_GATEWAY
+            );
+        }
     }
 
     /**
