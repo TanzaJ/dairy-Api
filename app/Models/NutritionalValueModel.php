@@ -4,6 +4,9 @@ namespace Vanier\Api\Models;
 
 use Vanier\Api\Models\BaseModel;
 
+/**
+ * A model class that handles requests concerning nutritional value
+ */
 class NutritionalValueModel extends BaseModel
 {
     private string $table_name = 'nutritional_value';
@@ -12,6 +15,11 @@ class NutritionalValueModel extends BaseModel
         parent::__construct();
     }
 
+    /**
+     * Fetches a list of nutritional value entries while filtering requests
+     * 
+     * @param  array $filters the filters added to the request
+     */
     public function getAll(array $filters) {
         $filter_values = [];
         $sql = "SELECT n.kcal, n.fiber, n.cholesterol, 
@@ -60,22 +68,43 @@ class NutritionalValueModel extends BaseModel
         return $this->paginate($sql, $filter_values);
     }
 
+    /**
+     * Fetches a list of nutritional value entries by their id
+     * 
+     * @param  array $nutritional_value_id the id of the requested resource
+     */
     public function getNVById(int $nutritional_value_id)
     {
         $sql = "SELECT * FROM $this->table_name WHERE nutritional_value_id = :nutritional_value_id";
         return $this->fetchSingle($sql, [':nutritional_value_id' => $nutritional_value_id]);
     }
 
+    /**
+     * Creates nutritional value entries
+     * 
+     * @param  array $new_entries the entries to be added to the DB
+     */
     public function addNV(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);
     }
 
+    /**
+     * Updates nutritional value entries
+     * 
+     * @param  array $new_nutritional_value_modify the entry to be updated
+     * @param  array $id the id of the entry to be modified
+     */
     public function updateNV(array $new_nutritional_value_modify, array $id)
     {
         return $this->update($this->table_name, $new_nutritional_value_modify, $id);
     }
 
+    /**
+     * Deletes nutritional value entries
+     * 
+     * @param  array $id the id of the entry to be deleted
+     */
     public function deleteNV(array $id)
     {
         return $this->delete($this->table_name, $id);

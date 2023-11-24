@@ -14,7 +14,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 /**
- * A controller class that handles requests concerning the spoonacular api
+ * A controller class that handles requests concerning composite resources
  */
 class CompositeController extends BaseController
 {
