@@ -106,6 +106,7 @@ class AccountsController extends BaseController
             if($this->accounts_model->isAccountExist($account_data["email"])){
                 if($this->accounts_model->isPasswordValid($account_data["email"],$account_data["password"])){
                     $expires_in = time() + $this->expiry_time;
+                    setcookie('user', $account_data['email'], $expires_in);
                     $token = $this->jwt_manager->generateJWT($account_data, $expires_in);
                     $response_data = array(
                         "code" => HttpCodes::STATUS_ACCEPTED,

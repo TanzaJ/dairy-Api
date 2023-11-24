@@ -28,8 +28,6 @@ class AppLoggingMiddleware implements MiddlewareInterface
         $ip = $_SERVER['REMOTE_ADDR'];
         $uri = $request->getUri();
         
-var_dump($request);
-
         // Extract the controller name from the URI path
         $path = $uri->getPath();
         $controllerName = $this->extractResourceName($path);
@@ -38,14 +36,20 @@ var_dump($request);
         $method = $request->getMethod();
         $actionName = $this->mapMethodToAction($method);
 
+        $user = "Unknown User";
+
+        if(isset($_COOKIE['user'])){
+            $user = "\"" . $_COOKIE['user'] . "\"";
+        }
+
         $filters = $request->getQueryParams();
         $this->logger = new Logger('access_logs');
         $this->logger->setTimezone(new DateTimeZone('America/Toronto'));
         $this->log_handler = new StreamHandler('access.log', Logger::DEBUG);
         $this->logger->pushHandler($this->log_handler);
-        $this->logger->alert('User Logged in w/ IP of ' . $ip);
+        $this->logger->alert($user . ' Logged in w/ IP of ' . $ip);
         
-        $this->logger->info("User Invoked $actionName on $controllerName", $filters);
+        $this->logger->info($user . " Invoked $actionName on $controllerName returned with Status Code: " . http_response_code(), $filters);
 
         return $handler->handle($request);
     }
