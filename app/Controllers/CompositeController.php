@@ -42,7 +42,7 @@ class CompositeController extends BaseController
         $uri = "https://api.spoonacular.com/recipes/complexSearch?apiKey=52f98e558d7a4e0182e8352289235bdf";
         $recipes = $ws_invoker->invokeUri($uri);
         //var_dump($recipes);exit;
-        if ($recipes != null) {        
+        if ($recipes != null) {
 
             $processed_recipes = array();
             foreach ($recipes->results as $key => $recipe) {
