@@ -3,6 +3,9 @@
 namespace Vanier\Api\Models;
 use Vanier\Api\Models\BaseModel;
 
+/**
+ * A model class that handles requests concerning cheese
+ */
 class CheeseModel extends BaseModel
 {
     private string $table_name = 'cheese';
@@ -10,6 +13,11 @@ class CheeseModel extends BaseModel
         parent::__construct();
     }
 
+    /**
+     * Fetches a list of cheeses while filtering requests
+     * 
+     * @param  array $filters the filters added to the request
+     */
     public function getAll( array $filters) {
         $filter_values = [];
        
@@ -42,22 +50,43 @@ class CheeseModel extends BaseModel
         return $this->paginate($sql, $filter_values);
     }
 
+    /**
+     * Fetches a list of cheeses by their id
+     * 
+     * @param  array $cheese_id the id of the requested cheese
+     */
     public function getCheeseById(int $cheese_id)
     {
         $sql = "SELECT * FROM $this->table_name WHERE cheese_id = :cheese_id";
         return $this->fetchSingle($sql, [':cheese_id' => $cheese_id]);
     }
 
+    /**
+     * Creates cheese entries
+     * 
+     * @param  array $new_entries the entries to be added to the DB
+     */
     public function addCheese(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);
     }
 
+    /**
+     * Updates cheese entries
+     * 
+     * @param  array $new_cheese_modify the entry to be updated
+     * @param  array $id the id of the entry to be modified
+     */
     public function updateModel(array $new_cheese_modify, int $id)
     {
         return $this->update($this->table_name, $new_cheese_modify, ['cheese_id'=> $id]);
     }
 
+    /**
+     * Deletes cheese entries
+     * 
+     * @param  array $id the id of the entry to be deleted
+     */
     public function deleteCheese(int $id)
     {
         return $this->delete($this->table_name, ['cheese_id'=> $id]);

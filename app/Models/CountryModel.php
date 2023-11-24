@@ -4,6 +4,9 @@ namespace Vanier\Api\Models;
 
 use Vanier\Api\Models\BaseModel;
 
+/**
+ * A model class that handles requests concerning countries
+ */
 class CountryModel extends BaseModel
 {
     private string $table_name = 'country';
@@ -11,6 +14,11 @@ class CountryModel extends BaseModel
         parent::__construct();
     }
 
+    /**
+     * Fetches a list of countries while filtering requests
+     * 
+     * @param  array $filters the filters added to the request
+     */
     public function getAll(array $filters) {
         $filter_values = [];
         $sql = "SELECT c.country_name, c.region, c.population, c.area_sq_mile, c.population_density_sq_mile, c.gdp_perCapita FROM country as c WHERE 1 ";
@@ -48,22 +56,43 @@ class CountryModel extends BaseModel
         return $this->paginate($sql, $filter_values);
     }
 
+    /**
+     * Fetches a list of countries by their id
+     * 
+     * @param  array $country_id the id of the requested country
+     */
     public function getCountryById(int $country_id)
     {
         $sql = "SELECT * FROM $this->table_name WHERE country_id = :country_id";
         return $this->fetchSingle($sql, [':country_id' => $country_id]);
     }
 
+    /**
+     * Creates country entries
+     * 
+     * @param  array $new_entries the entries to be added to the DB
+     */
     public function addCountry(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);
     }
 
+    /**
+     * Updates country entries
+     * 
+     * @param  array $new_country_modify the entry to be updated
+     * @param  array $id the id of the entry to be modified
+     */
     public function updateCountry(array $new_country_modify, array $id)
     {
         return $this->update($this->table_name, $new_country_modify, $id);
     }
 
+    /**
+     * Deletes country entries
+     * 
+     * @param  array $id the id of the entry to be deleted
+     */
     public function deleteCountry(array $id)
     {
         return $this->delete($this->table_name, $id);

@@ -4,6 +4,9 @@ namespace Vanier\Api\Models;
 
 use Vanier\Api\Models\BaseModel;
 
+/**
+ * A model class that handles requests concerning milk
+ */
 class MilkModel extends BaseModel
 {
     private string $table_name = 'milk';
@@ -13,7 +16,11 @@ class MilkModel extends BaseModel
         parent::__construct();
     }
 
-
+    /**
+     * Fetches a list of milk while filtering requests
+     * 
+     * @param  array $filters the filters added to the request
+     */
     public function getAll(array $filters)
     {
         $filter_values = [];
@@ -59,9 +66,9 @@ class MilkModel extends BaseModel
     }
 
     /**
-     * Gets milk by their id
+     * Fetches a list of milk entries by their id
      * 
-     * @param  int $milk_id the id of the entry the client is fetching
+     * @param  array $milk_id the id of the requested resource
      */
     public function getMilkById(int $milk_id)
     {
@@ -69,6 +76,11 @@ class MilkModel extends BaseModel
         return $this->fetchSingle($sql, [':milk_id' => $milk_id]);
     }
 
+    /**
+     * Creates milk entries
+     * 
+     * @param  array $new_entries the entries to be added to the DB
+     */
     public function addMilk(array $new_entries)
     {
         return $this->insert($this->table_name, $new_entries);
@@ -78,12 +90,24 @@ class MilkModel extends BaseModel
     // {
     //     return $this->update($this->table_name, $new_milk_modify, (array) $id);
     // }
+    
+    /**
+     * Updates milk entries
+     * 
+     * @param  array $data the entry to be updated
+     * @param  array $milk_id the id of the entry to be modified
+     */
     public function updateModel(array $data, int $milk_id)
     {
         $where = ['milk_id' => $milk_id];
         return $this->update($this->table_name, $data, $where);
     }
 
+    /**
+     * Deletes milk entries
+     * 
+     * @param  array $id the id of the entry to be deleted
+     */
     public function deleteMilk(int $id)
     {
         $where = ['milk_id' => $id]; 
