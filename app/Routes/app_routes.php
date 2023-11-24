@@ -21,6 +21,7 @@ use Vanier\Api\Controllers\CountryController;
 use Vanier\Api\Models\CountryModel;
 use Vanier\Api\Controllers\NutritionalValueController;
 use Vanier\Api\Models\NutritionalValueModel;
+use Vanier\Api\Controllers\CompositeController;
 
 
 // Import the app instance into this file's scope.
@@ -140,3 +141,6 @@ $app->get('/unit_type/{unit_id}', [UnitTypeController::class, 'handleGetUnitType
 // $app->put('/milk/{unitType_id}/unit_type', [UnitTypeController::class, 'handleUpdateUnitType']);
 // //DELETE /country
 // $app->delete('/milk/{unitType_id}/unit_type', [UnitTypeController::class, 'handleDeleteUnitType']);
+
+//Our composite resource
+$app->get('/recipes', [CompositeController::class, 'handleGetRecipes']);
