@@ -24,6 +24,8 @@ This api exposes resources concerning milk and other dairy products.
 
 /unit_type: GET, filter by unit_name, unit_scale
 
+/recipes: GET a list of recipes from the spoonacular api
+
 ## Requirements
 
 The header must include the application type in order to use the resource.
