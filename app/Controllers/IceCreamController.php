@@ -13,7 +13,9 @@ use Vanier\Api\Models\IceCreamModel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-
+/**
+ * A controller class that handles requests concerning ice cream
+ */
 class IceCreamController extends BaseController
 {
 
@@ -24,6 +26,13 @@ class IceCreamController extends BaseController
         $this->ice_cream_model = new IceCreamModel();
     }
 
+    /**
+     * Fetches a list of ice creams
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetIceCream(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -42,6 +51,13 @@ class IceCreamController extends BaseController
         return $this->prepareOkResponse($response,(array) $ice_cream_info);
     }
 
+    /**
+     * Fetches a list of ice creams based on id
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetIceCreamById(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -59,6 +75,12 @@ class IceCreamController extends BaseController
         return $this->prepareOkResponse($response,(array) $ice_cream);
     }
 
+    /**
+     * Creates ice cream entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     */
     public function handleCreateIceCream(Request $request, Response $response)
     {
          $rules = array(
@@ -141,6 +163,13 @@ class IceCreamController extends BaseController
         }
     }
 
+    /**
+     * Updates ice cream entries based on the request body
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleUpdateIceCream(Request $request, Response $response, array $uri_args)
     {
         $ice_creams = $request->getParsedBody();
@@ -222,6 +251,13 @@ class IceCreamController extends BaseController
         }
     }
 
+    /**
+     * Deletes ice cream entries based on the provided id
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleDeleteIceCream(Request $request, Response $response, array $uri_args)
     {
         $isError = false;

@@ -14,6 +14,9 @@ use Slim\Exception\HttpBadRequestException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * A controller class that handles requests concerning nutritional value
+ */
 class NutritionalValueController extends BaseController
 {
     private $nv_model =null;
@@ -22,6 +25,13 @@ class NutritionalValueController extends BaseController
         $this->nv_model = new NutritionalValueModel();
     }
 
+    /**
+     * Fetches a list of nutritional value entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetNV(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -40,6 +50,13 @@ class NutritionalValueController extends BaseController
         return $this->prepareOkResponse($response,(array) $nv_info);
     }
 
+    /**
+     * Fetches a list of nutritional value entries based on id
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetNVById(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -57,6 +74,12 @@ class NutritionalValueController extends BaseController
         return $this->prepareOkResponse($response,(array) $nv);
     }
 
+    /**
+     * Creates nutritional value entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     */
     public function handleCreateNV(Request $request, Response $response)
     {
         $rules = array(
@@ -148,6 +171,13 @@ class NutritionalValueController extends BaseController
         }
     }
 
+    /**
+     * Updates nutritional value entries based on the request body
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleUpdateNV(Request $request, Response $response, array $uri_args)
     {
         $nvs = $request->getParsedBody();
@@ -177,6 +207,13 @@ class NutritionalValueController extends BaseController
 
     }
 
+    /**
+     * Deletes nutritional value entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleDeleteNV(Request $request, Response $response, array $uri_args)
     {
         $nvs = $request->getParsedBody(); 
@@ -202,6 +239,12 @@ class NutritionalValueController extends BaseController
         HttpCodes::STATUS_ACCEPTED
     );
     }
+
+    /**
+     * Validates nutritional value entries
+     * 
+     * @param  array $nv the entry to be validated
+     */
     public function validateNV(array $nv) {
         $rules = array(
             'brand_id ' => array(

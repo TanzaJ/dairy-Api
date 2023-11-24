@@ -13,6 +13,9 @@ use Slim\Exception\HttpBadRequestException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * A controller class that handles requests concerning projected milk production
+ */
 class ProjMilkController extends BaseController
 {
     private $proj_milk_model =null;
@@ -21,6 +24,13 @@ class ProjMilkController extends BaseController
         $this->proj_milk_model = new ProjMilkModel();
     }
 
+    /**
+     * Fetches a list of projected milk production entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetProjMilk(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -40,6 +50,13 @@ class ProjMilkController extends BaseController
         return $this->prepareOkResponse($response,(array) $proj_milk_info);
     }
 
+    /**
+     * Fetches a list of projected milk production entries based on id
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetProjMilkById(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -57,6 +74,12 @@ class ProjMilkController extends BaseController
         return $this->prepareOkResponse($response,(array) $proj_milk);
     }
 
+    /**
+     * Creates projected milk production entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     */
     public function handleCreateProjMilk(Request $request, Response $response)
     {
         $projMilks = $request->getParsedBody();
@@ -81,6 +104,13 @@ class ProjMilkController extends BaseController
         );
     }
 
+    /**
+     * Updates projected milk production entries based on the request body
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleUpdateProjMilk(Request $request, Response $response, array $uri_args)
     {
         $projMilks = $request->getParsedBody();
@@ -110,6 +140,13 @@ class ProjMilkController extends BaseController
 
     }
 
+    /**
+     * Deletes projected milk production entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleDeleteProjMilk(Request $request, Response $response, array $uri_args)
     {
         $projMilks = $request->getParsedBody(); 
@@ -135,6 +172,12 @@ class ProjMilkController extends BaseController
         HttpCodes::STATUS_ACCEPTED
     );
     }
+
+    /**
+     * Validates projected milk production entries
+     * 
+     * @param  array $projMilk the entry to be validated
+     */
     public function validateProjMilk(array $projMilk) {
         $rules = array(
             'pmp_id' => array(

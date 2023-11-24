@@ -14,7 +14,9 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 
-
+/**
+ * A controller class that handles requests concerning milk
+ */
 class MilkController extends BaseController
 {
 
@@ -28,6 +30,13 @@ class MilkController extends BaseController
  
     }
 
+    /**
+     * Fetches a list of milk entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetMilk(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -48,6 +57,13 @@ class MilkController extends BaseController
         return $this->prepareOkResponse($response,(array) $milk);
     }
 
+    /**
+     * Fetches a list of milk entries based on id
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetMilkById(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -65,6 +81,12 @@ class MilkController extends BaseController
         return $this->prepareOkResponse($response,(array) $milk);
     }
 
+    /**
+     * Creates milk entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     */
     public function handleCreateMilk(Request $request, Response $response)
     {
         //Rules
@@ -150,6 +172,13 @@ class MilkController extends BaseController
         }
     }
 
+    /**
+     * Updates milk entries based on the request body
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleUpdateMilk(Request $request, Response $response, array $uri_args)
     {
         //Rules
@@ -238,6 +267,13 @@ class MilkController extends BaseController
 
     }
 
+    /**
+     * Deletes milk entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleDeleteMilk(Request $request, Response $response, array $uri_args)
     {
         $isError = false;
@@ -275,6 +311,11 @@ class MilkController extends BaseController
         }
     }
 
+    /**
+     * Validates milk entries
+     * 
+     * @param  array $milk the entry to be validated
+     */
     public function validateMilk(array $milk) 
     {
         $rules = array(

@@ -13,7 +13,9 @@ use Slim\Exception\HttpBadRequestException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-
+/**
+ * A controller class that handles requests concerning butter entries
+ */
 class ButterController extends BaseController
 {
     private $butter_model =null;
@@ -22,6 +24,13 @@ class ButterController extends BaseController
         $this->butter_model = new ButterModel();
     }
 
+    /**
+     * Fetches a list of butters
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetButter(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -42,6 +51,13 @@ class ButterController extends BaseController
         return $this->prepareOkResponse($response,(array) $butter_info);
     }
 
+    /**
+     * Fetches a list of butters based on the id provided
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetButterById(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -59,6 +75,12 @@ class ButterController extends BaseController
         return $this->prepareOkResponse($response,(array) $butter);
     }
 
+    /**
+     * Creates butter entries
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     */
     public function handleCreateButter(Request $request, Response $response)
     {
         $butters = $request->getParsedBody();
@@ -83,6 +105,13 @@ class ButterController extends BaseController
         );
     }
 
+    /**
+     * Updates butter entries based on the request body
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleUpdateButter(Request $request, Response $response, array $uri_args)
     {
         $butters = $request->getParsedBody();
@@ -112,6 +141,13 @@ class ButterController extends BaseController
 
     }
 
+    /**
+     * Deletes butter entries based on the id provided
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleDeleteButter(Request $request, Response $response, array $uri_args)
     {
         $butters = $request->getParsedBody(); 
@@ -138,6 +174,11 @@ class ButterController extends BaseController
     );
     }
 
+    /**
+     * Validates butter entries
+     * 
+     * @param  array $butter the entry to be validated
+     */
     public function validateButter(array $butter) 
     {
         $rules = array(

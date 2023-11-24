@@ -13,26 +13,29 @@ use Slim\Exception\HttpBadRequestException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * A controller class that handles requests concerning the spoonacular api
+ */
 class CompositeController extends BaseController
 {
-    //private array $errors = array();
-    //private $composite_model =null;
-    //private $log;
 
-
-    // public function __construct() {
-    //     $this->composite_model = new CompositeModel();
-
-    // }
-
+    /**
+     * Fetches a list of recipes from the spoonacular api
+     * 
+     * @param  Request $request the request
+     * @param  Response $response the response
+     * @param  array $uri_args the arguments added to the request
+     */
     public function handleGetRecipes(Request $request, Response $response, array $uri_args)
     {
-        //$filters = $request->getQueryParams();
         $recipes = $this->fetchRecipes();
 
         return $this->prepareOkResponse($response, (array) $recipes);
     }
 
+    /**
+     * The logic for fetching from spoonacular
+     */
     public function fetchRecipes(): mixed
     {
         $ws_invoker = new WebServiceInvoker([]);
