@@ -22,6 +22,7 @@ use Vanier\Api\Models\CountryModel;
 use Vanier\Api\Controllers\NutritionalValueController;
 use Vanier\Api\Models\NutritionalValueModel;
 use Vanier\Api\Controllers\CompositeController;
+use Vanier\Api\Controllers\HealthController;
 
 
 // Import the app instance into this file's scope.
@@ -33,6 +34,10 @@ global $app;
 
 // GET /
 $app->get('/', [AboutController::class, 'handleAboutApi']); 
+
+// Get /health
+$app->get('/health', [HealthController::class, 'handleGetHealth']); 
+
 
 // POST /account
 $app->post('/account', [AccountsController::class, 'handleCreateAccount']); 
