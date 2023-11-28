@@ -21,6 +21,7 @@ class IceCreamController extends BaseController
 
     private array $errors = array();
     private $ice_cream_model =null;
+    private $isEmpty = false;
 
     public function __construct() {
         $this->ice_cream_model = new IceCreamModel();
@@ -102,7 +103,7 @@ class IceCreamController extends BaseController
         );
         $isError = false;
         $ice_creams = $request->getParsedBody();
-        $isEmpty = false;
+        $this->isEmpty = false;
         
         if ($ice_creams != null && $ice_creams != '') {
             foreach ($ice_creams as $key => $ice_cream){
@@ -119,7 +120,7 @@ class IceCreamController extends BaseController
             }
         }
         else{
-            $isEmpty = true;
+            $this->isEmpty = true;
         }
 
         if ($isError){
@@ -138,7 +139,7 @@ class IceCreamController extends BaseController
                 HttpCodes::STATUS_BAD_REQUEST
             );
         }
-        else if ($isEmpty){
+        else if ($this->isEmpty){
 
             $response_data = array(
                 "code" => HttpCodes::STATUS_BAD_REQUEST,
@@ -207,7 +208,7 @@ class IceCreamController extends BaseController
             }
         }
         else{
-            $isEmpty = true;
+            $this->isEmpty = true;
         }
 
         if ($isError){
@@ -226,7 +227,7 @@ class IceCreamController extends BaseController
                 HttpCodes::STATUS_BAD_REQUEST
             );
         }
-        else if ($isEmpty){
+        else if ($this->isEmpty){
 
             $response_data = array(
                 "code" => HttpCodes::STATUS_BAD_REQUEST,

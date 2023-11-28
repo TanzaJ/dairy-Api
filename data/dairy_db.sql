@@ -986,7 +986,7 @@ ALTER TABLE `country`
 -- Indexes for table `ice_cream`
 --
 ALTER TABLE `ice_cream`
-  ADD PRIMARY KEY (`ice_cream_id`,`milk_id`),
+  ADD PRIMARY KEY (`ice_cream_id`),
   ADD KEY `milk_id` (`milk_id`),
   ADD KEY `country_id` (`country_id`),
   ADD KEY `brand_id` (`brand_id`),
@@ -1038,6 +1038,11 @@ ALTER TABLE `ws_users`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `ice_cream`
+--
+ALTER TABLE `ice_cream`
+  MODIFY `ice_cream_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 --
 -- AUTO_INCREMENT for table `brand`
 --

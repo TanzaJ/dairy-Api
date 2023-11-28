@@ -125,7 +125,7 @@ class BaseModel
         //     "message" => "There was trouble retrieving the data... Please check your input and try again."
         
         // );
-            echo $stmt;
+            // echo $stmt;
             
         }
 

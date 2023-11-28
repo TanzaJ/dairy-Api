@@ -136,8 +136,8 @@ $app->get('/projected_milk_production/{pmp_id}', [ProjMilkController::class, 'ha
 $app->get('/nutritional_value', [NutritionalValueController::class, 'handleGetNV']);
 // GET /nutritional_value by id
 $app->get('/nutritional_value/{nutritional_value_id}', [NutritionalValueController::class, 'handleGetNVById']);
-// //POST /country
-// $app->post('/nutritional_value', [NutritionalValueController::class, 'handleCreateNV']);
+//POST /country
+$app->post('/nutritional_value', [NutritionalValueController::class, 'handleCreateNV']);
 // //PUT /country
 // $app->put('/milk/{nv_id}/nutritional_value', [NutritionalValueController::class, 'handleUpdateNV']);
 // //DELETE /country

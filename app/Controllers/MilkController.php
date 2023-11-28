@@ -26,6 +26,7 @@ class MilkController extends BaseController
 
 
     public function __construct() {
+        // $this->log = new Logger();
         $this->milk_model = new MilkModel();
  
     }
@@ -53,7 +54,7 @@ class MilkController extends BaseController
 
         $filters = $request->getQueryParams();
         $milk = $this->milk_model->getAll($filters);
-        $this->log->info('Get Request for MILK received with following filters:', $filters);
+        // $this->log->info('Get Request for MILK received with following filters:', $filters);
         return $this->prepareOkResponse($response,(array) $milk);
     }
 
@@ -91,9 +92,6 @@ class MilkController extends BaseController
     {
         //Rules
         $rules = array(
-            'milk_id' => array(
-                'required', 'integer'
-            ),
             'name' => array(
                 'required'
             ),
@@ -151,7 +149,7 @@ class MilkController extends BaseController
 
             $response_data = array(
                 "code" => HttpCodes::STATUS_BAD_REQUEST,
-                "message" => "Product already exists, please check the ID"//$message,
+                "message" => $message,
             );
             return $this->prepareOkResponse(
                 $response,
