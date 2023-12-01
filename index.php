@@ -22,8 +22,8 @@ $app = AppFactory::create();
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
-$app->addMiddleware(new JWTAuthMiddleware());
-$app->addMiddleware(new ContentNegotiationMiddleware());
+// $app->addMiddleware(new JWTAuthMiddleware());
+// $app->addMiddleware(new ContentNegotiationMiddleware());
 $app->addMiddleware(new AppLoggingMiddleware());
 $app->addBodyParsingMiddleware();
 // NOTE: the error handling middleware MUST be added last.

@@ -90,7 +90,7 @@ class ButterController extends BaseController
             "Couldn't create butters/process the request due to missing data.");
         }
         foreach($butters as $key => $butter) {
-            $this->validateButter($butter);
+            // $this->validateButter($butter);
 
             $this->butter_model->addButter($butter);
         }
