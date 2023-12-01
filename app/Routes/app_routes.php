@@ -124,11 +124,11 @@ $app->get('/country/{country_id}', [CountryController::class, 'handleGetCountryB
 $app->get('/projected_milk_production', [ProjMilkController::class, 'handleGetProjMilk']);
 // GET /projectedMilkProduction by id
 $app->get('/projected_milk_production/{pmp_id}', [ProjMilkController::class, 'handleGetProjMilkById']);
-// //POST /country
+// //POST /projectedMilkProduction
 // $app->post('/projected_milk_production', [ProjMilkController::class, 'handleCreateProjMilk']);
-// //PUT /country
+// //PUT /projectedMilkProduction
 // $app->put('/milk/{projMilk_id}/projected_milk_production', [ProjMilkController::class, 'handleUpdateProjMilk']);
-// //DELETE /country
+// //DELETE /projectedMilkProduction
 // $app->delete('/milk/{projMilk_id}/projected_milk_production', [ProjMilkController::class, 'handleDeleteProjMilk']);
 
 
@@ -136,11 +136,11 @@ $app->get('/projected_milk_production/{pmp_id}', [ProjMilkController::class, 'ha
 $app->get('/nutritional_value', [NutritionalValueController::class, 'handleGetNV']);
 // GET /nutritional_value by id
 $app->get('/nutritional_value/{nutritional_value_id}', [NutritionalValueController::class, 'handleGetNVById']);
-//POST /country
+//POST /nutritional_value
 $app->post('/nutritional_value', [NutritionalValueController::class, 'handleCreateNV']);
-// //PUT /country
+// //PUT /nutritional_value
 // $app->put('/milk/{nv_id}/nutritional_value', [NutritionalValueController::class, 'handleUpdateNV']);
-// //DELETE /country
+// //DELETE /nutritional_value
 // $app->delete('/milk/{nv_id}/nutritional_value', [NutritionalValueController::class, 'handleDeleteNV']);
 
 
@@ -148,11 +148,11 @@ $app->post('/nutritional_value', [NutritionalValueController::class, 'handleCrea
 $app->get('/unit_type', [UnitTypeController::class, 'handleGetUnitType']);
 // GET /unit_type by id
 $app->get('/unit_type/{unit_id}', [UnitTypeController::class, 'handleGetUnitTypeById']);
-// //POST /country
+// //POST /unit_type
 // $app->post('/unit_type', [UnitTypeController::class, 'handleCreateUnitType']);
-// //PUT /country
+// //PUT /unit_type
 // $app->put('/milk/{unitType_id}/unit_type', [UnitTypeController::class, 'handleUpdateUnitType']);
-// //DELETE /country
+// //DELETE /unit_type
 // $app->delete('/milk/{unitType_id}/unit_type', [UnitTypeController::class, 'handleDeleteUnitType']);
 
 //Our composite resource
