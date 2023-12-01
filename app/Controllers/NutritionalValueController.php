@@ -20,6 +20,7 @@ use Monolog\Logger;
 class NutritionalValueController extends BaseController
 {
     private $nv_model =null;
+    private array $errors = array();
 
     public function __construct() {
         $this->nv_model = new NutritionalValueModel();
@@ -83,29 +84,29 @@ class NutritionalValueController extends BaseController
     public function handleCreateNV(Request $request, Response $response)
     {
         $rules = array(
-            'kcal ' => array(
-                'required', 'integer'
+            'kcal' => array(
+                'required', 'numeric'
             ),
             'fiber' => array(
-                'required', 'integer'
+                'required', 'numeric'
             ),
             'cholesterol' => array(
-                'required', 'integer'
+                'required', 'numeric'
             ),
-            'carbohydrate ' => array(
-                'required', 'integer'
+            'carbohydrate' => array(
+                'required', 'numeric'
             ),
             'protein' => array(
-                'required', 'integer'
+                'required', 'numeric'
             ),
             'monosat_fat' => array(
-                'required', 'integer'
+                'required', 'numeric'
             ),
-            'polysat_fat ' => array(
-                'required', 'integer'
+            'polysat_fat' => array(
+                'required', 'numeric'
             ),
             'sat_fat' => array(
-                'required', 'integer'
+                'required', 'numeric'
             )
         );
         $isError = false;
@@ -116,7 +117,7 @@ class NutritionalValueController extends BaseController
             foreach ($nvs as $key => $nv){
                 $validation_response = $this->isValidData($nv, $rules);
                 if($validation_response === true){
-                    $this->nv_model->addIceCream($nv);
+                    $this->nv_model->addNV($nv);
     
                 }
                 else {
@@ -254,7 +255,7 @@ class NutritionalValueController extends BaseController
                 'required',
             ),
             'country_id' => array(
-                'int'
+                'integer'
             )
         );
 

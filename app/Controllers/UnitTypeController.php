@@ -70,7 +70,7 @@ class UnitTypeController extends BaseController
 
 
 
-        $unit = $this->unit_model->getUnitTypeById($uri_args['unit_id']);
+        $unit = $this->unit_type_model->getUnitTypeById($uri_args['unit_id']);
         return $this->prepareOkResponse($response,(array) $unit);
     }
     

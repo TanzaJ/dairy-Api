@@ -26,7 +26,7 @@ class AccountsController extends BaseController
     private $accounts_model = null;
     private $jwt_manager = null;
     private array $errors = array();
-    private $expiry_time = 600;
+    private $expiry_time = 999999;
 
 
     public function __construct()
