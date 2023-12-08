@@ -10,6 +10,8 @@ use Vanier\Api\Exceptions\HttpNotAcceptableException;
 use DateTimeZone;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Vanier\Api\Models\AccountsModel;
+use Vanier\Api\Models\AccessLogModel;
 
 
 class AppLoggingMiddleware implements MiddlewareInterface
@@ -17,10 +19,17 @@ class AppLoggingMiddleware implements MiddlewareInterface
     private $logger;
     private $log_handler;
 
+    private $account_model = null;
+
+    private $access_log_model =null;
+    private $log;
+
+
     public function __construct(array $options = [])
     {
-        
-        // $this->logger->pushHandler(new StreamHandler('dairy.log', Logger::DEBUG));
+        $this->account_model = new AccountsModel();
+
+        $this->access_log_model = new AccessLogModel();
     }
     
     public function process(Request $request, RequestHandler $handler): ResponseInterface
@@ -30,6 +39,7 @@ class AppLoggingMiddleware implements MiddlewareInterface
         
         // Extract the controller name from the URI path
         $path = $uri->getPath();
+        // echo $path; exit;
         $controllerName = $this->extractResourceName($path);
         $controllerName = ucfirst($controllerName);
 
@@ -37,9 +47,12 @@ class AppLoggingMiddleware implements MiddlewareInterface
         $actionName = $this->mapMethodToAction($method);
 
         $user = "Unknown User";
+        $uid = "youre a lil sussy wussy baka if youre reading this uwu";
+        
 
         if(isset($_COOKIE['user'])){
             $user = "\"" . $_COOKIE['user'] . "\"";
+            $uid = $this->account_model->fetchUID($_COOKIE['user']);
         }
 
         $filters = $request->getQueryParams();
@@ -51,6 +64,15 @@ class AppLoggingMiddleware implements MiddlewareInterface
         
         $this->logger->info($user . " Invoked $actionName on $controllerName returned with Status Code: " . http_response_code(), $filters);
 
+        $user_data = array(
+            'id' => $uid["user_id"],
+            'email' => $user
+        );
+        
+        $this->access_log_model->createLogEntry(
+            $user_data,
+            "$actionName on $controllerName"
+        );
         return $handler->handle($request);
     }
 
@@ -67,7 +89,7 @@ class AppLoggingMiddleware implements MiddlewareInterface
     
     private function extractResourceName(string $path): string
     {
-        $basePath = '/dairy-api/';
+        $basePath = '/dairy-api/v2/';
         $pathWithoutBase = str_replace($basePath, '', $path);
         $segments = explode('/', trim($pathWithoutBase, '/'));
         return $segments[0] ?? 'UnknownResource';

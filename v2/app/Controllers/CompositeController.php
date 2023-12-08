@@ -37,7 +37,7 @@ class CompositeController extends BaseController
             return $this->prepareOkResponse(
                 $response,
                 $recipes,
-                HttpCodes::STATUS_BAD_GATEWAY
+                HttpCodes::STATUS_ACCEPTED
             );
         } catch (Exception $e) {
             $response_data = array(

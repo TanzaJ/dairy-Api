@@ -67,6 +67,11 @@ class AccountsModel extends BaseModel
         return $this->insert($this->table_name, $account_info);
     }
 
+    public function fetchUID($email){
+        $sql = "SELECT user_id FROM $this->table_name WHERE email = :email";
+        return $this->fetchSingle($sql, [":email" => $email]);
+    }
+
     /**
      * Returns a hashed password.
      * 
@@ -80,4 +85,6 @@ class AccountsModel extends BaseModel
         $hash = password_hash($password_to_hash, PASSWORD_DEFAULT, $options);
         return $hash;
     }
+
+
 }
