@@ -13,11 +13,16 @@ class AboutController extends BaseController
     {
         $routes = [
             'GET /' => 'Welcome, this is a Web service that provides data regarding dairy products',
+            'POST /account' => 'This is used for account creation',
+            'POST /token' => 'This is used for creating a token by login in',
+            'GET /health' => 'Computational resource that checks for your BMI, and tells you whether or not you should eat cheese.',
             'GET /milk' => 'Retrieves information about milk products.',
             'POST /milk' => 'Creates a new entry for milk products.',
             'PUT /milk' => 'Updates information about existing milk products.',
             'DELETE /milk/{milk_id}' => 'Deletes a specific milk product based on the provided `milk_id`.',
             'GET /cheese' => 'Retrieves information about cheese products.',
+            'GET /learn/cheese/' => 'Retrieves educational information about all cheeses (composite resource).',
+            'GET /learn/cheese/random' => 'Retrieves educational information about a random cheese (composite resource).',
             'POST /cheese' => 'Creates a new entry for cheese products.',
             'PUT /cheese' => 'Updates information about existing cheese products.',
             'DELETE /cheese' => 'Deletes a specific cheese product.',
